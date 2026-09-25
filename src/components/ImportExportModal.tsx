@@ -93,7 +93,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-200 bg-slate-50/80 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Database className="w-5 h-5 text-amber-600" />
+            <Database className="w-5 h-5 text-blue-600" />
             <h2 className="text-base font-bold text-slate-900">
               Data Management & Backup
             </h2>
@@ -112,7 +112,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
             onClick={() => setActiveTab('export')}
             className={`py-2.5 px-4 text-xs font-semibold border-b-2 transition-colors flex items-center gap-1.5 ${
               activeTab === 'export'
-                ? 'border-amber-600 text-amber-700'
+                ? 'border-blue-600 text-blue-700'
                 : 'border-transparent text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -123,7 +123,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
             onClick={() => setActiveTab('import')}
             className={`py-2.5 px-4 text-xs font-semibold border-b-2 transition-colors flex items-center gap-1.5 ${
               activeTab === 'import'
-                ? 'border-amber-600 text-amber-700'
+                ? 'border-blue-600 text-blue-700'
                 : 'border-transparent text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -157,7 +157,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
 
                   <button
                     onClick={handleExportCSV}
-                    className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold shadow-2xs transition-colors"
+                    className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold shadow-sm transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download CSV</span>
@@ -178,7 +178,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
 
                   <button
                     onClick={handleExportJSON}
-                    className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-semibold shadow-2xs transition-colors"
+                    className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-semibold shadow-sm transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download JSON</span>
@@ -198,7 +198,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               {/* Upload Drop Zone */}
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-xl p-6 text-center cursor-pointer bg-slate-50 hover:bg-slate-100/60 transition-colors"
+                className="border-2 border-dashed border-slate-300 hover:border-blue-500 rounded-xl p-6 text-center cursor-pointer bg-slate-50 hover:bg-slate-100/60 transition-colors"
               >
                 <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
                 <div className="font-semibold text-slate-800">Click to browse file (.csv or .json)</div>
@@ -237,7 +237,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
                         name="importMode"
                         checked={importMode === 'replace'}
                         onChange={() => setImportMode('replace')}
-                        className="text-amber-600 focus:ring-amber-500"
+                        className="text-blue-600 focus:ring-blue-500"
                       />
                       <span>Replace existing records ({members.length} currently)</span>
                     </label>
@@ -248,7 +248,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
                         name="importMode"
                         checked={importMode === 'append'}
                         onChange={() => setImportMode('append')}
-                        className="text-amber-600 focus:ring-amber-500"
+                        className="text-blue-600 focus:ring-blue-500"
                       />
                       <span>Append to current list</span>
                     </label>
@@ -256,7 +256,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
 
                   <button
                     onClick={handleCommitImport}
-                    className="w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg shadow-sm transition-colors"
+                    className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-sm transition-colors"
                   >
                     Commit & Import {importPreview.length} Records
                   </button>

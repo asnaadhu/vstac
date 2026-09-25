@@ -171,7 +171,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
     <div className="space-y-4">
       
       {/* Search & Advanced Filters Bar */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           
           <div className="flex flex-wrap items-center gap-2.5 flex-1">
@@ -183,12 +183,12 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                 value={filterState.search}
                 onChange={(e) => onFilterChange({ search: e.target.value })}
                 placeholder="Search staff name, job title, email, AD user, serial, asset tag..."
-                className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500"
               />
             </div>
 
             {/* Avani+ Fares Scope Badge */}
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 font-semibold text-xs shrink-0">
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 bg-blue-50 border border-blue-200 rounded-lg text-blue-900 font-semibold text-xs shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span className="font-mono font-bold">VFAR</span>
               <span className="text-[11px] text-slate-600 hidden md:inline">· Avani+ Fares Maldives</span>
@@ -198,7 +198,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
             <select
               value={filterState.department}
               onChange={(e) => onFilterChange({ department: e.target.value })}
-              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
             >
               <option value="All">All Departments</option>
               {DEPARTMENT_OPTIONS.map(dept => (
@@ -210,7 +210,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
             <select
               value={filterState.status}
               onChange={(e) => onFilterChange({ status: e.target.value })}
-              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
             >
               <option value="All">All Statuses</option>
               <option value="Active">Active</option>
@@ -223,7 +223,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
             <select
               value={filterState.licenseType}
               onChange={(e) => onFilterChange({ licenseType: e.target.value })}
-              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
             >
               <option value="All">All M365 Licenses</option>
               <option value="M365 E5">M365 E5</option>
@@ -237,7 +237,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
             <select
               value={filterState.systemFilter}
               onChange={(e) => onFilterChange({ systemFilter: e.target.value })}
-              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
             >
               <option value="All">Any System</option>
               <option value="operaCloud">Opera Cloud PMS</option>
@@ -255,7 +255,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
               onClick={() => onFilterChange({ leadersDLOnly: !filterState.leadersDLOnly })}
               className={`px-2.5 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
                 filterState.leadersDLOnly
-                  ? 'bg-amber-100/80 border-amber-300 text-amber-900'
+                  ? 'bg-blue-100/80 border-blue-300 text-blue-900'
                   : 'bg-slate-50 border-slate-200 text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -285,7 +285,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
             {hasActiveFilters && (
               <button
                 onClick={onResetFilters}
-                className="px-2.5 py-1.5 text-xs text-slate-500 hover:text-amber-700 underline underline-offset-4"
+                className="px-2.5 py-1.5 text-xs text-slate-500 hover:text-blue-700 underline underline-offset-4"
               >
                 Clear
               </button>
@@ -297,13 +297,13 @@ export const MemberTable: React.FC<MemberTableProps> = ({
 
       {/* Bulk Operations Toolbar */}
       {selectedIds.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-amber-950">{selectedIds.length} members selected</span>
-            <span className="text-amber-400">·</span>
+            <span className="font-semibold text-blue-950">{selectedIds.length} members selected</span>
+            <span className="text-blue-400">·</span>
             <button
               onClick={() => setSelectedIds([])}
-              className="text-amber-800 hover:underline"
+              className="text-blue-800 hover:underline"
             >
               Deselect all
             </button>
@@ -312,9 +312,9 @@ export const MemberTable: React.FC<MemberTableProps> = ({
           <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={handleBulkExport}
-              className="flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 rounded-lg font-medium transition-colors shadow-2xs"
+              className="flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 rounded-lg font-medium transition-colors shadow-sm"
             >
-              <Download className="w-3.5 h-3.5 text-amber-700" />
+              <Download className="w-3.5 h-3.5 text-blue-700" />
               <span>Export Selected CSV</span>
             </button>
             
@@ -342,7 +342,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
       )}
 
       {/* Main Table */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-700">
             <thead className="bg-slate-50/90 text-slate-600 border-b border-slate-200 select-none">
@@ -352,12 +352,12 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                     type="checkbox"
                     checked={sortedMembers.length > 0 && selectedIds.length === sortedMembers.length}
                     onChange={(e) => handleSelectAll(e.target.checked)}
-                    className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                    className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                   />
                 </th>
                 <th 
                   onClick={() => handleSort('employeeName')}
-                  className="py-3 px-3.5 font-semibold text-slate-700 cursor-pointer hover:text-amber-800 transition-colors"
+                  className="py-3 px-3.5 font-semibold text-slate-700 cursor-pointer hover:text-blue-800 transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Member & Title</span>
@@ -366,7 +366,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                 </th>
                 <th 
                   onClick={() => handleSort('department')}
-                  className="py-3 px-3.5 font-semibold text-slate-700 cursor-pointer hover:text-amber-800 transition-colors"
+                  className="py-3 px-3.5 font-semibold text-slate-700 cursor-pointer hover:text-blue-800 transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Department</span>
@@ -375,7 +375,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                 </th>
                 <th 
                   onClick={() => handleSort('status')}
-                  className="py-3 px-3.5 font-semibold text-slate-700 cursor-pointer hover:text-amber-800 transition-colors"
+                  className="py-3 px-3.5 font-semibold text-slate-700 cursor-pointer hover:text-blue-800 transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Status</span>
@@ -416,8 +416,8 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                   let statusDot = 'bg-emerald-500';
                   let statusText = 'text-emerald-700';
                   if (member.status === 'Onboarding') {
-                    statusDot = 'bg-amber-500 animate-pulse';
-                    statusText = 'text-amber-700';
+                    statusDot = 'bg-blue-500 animate-pulse';
+                    statusText = 'text-blue-700';
                   } else if (member.status === 'Offboarded') {
                     statusDot = 'bg-slate-400';
                     statusText = 'text-slate-500';
@@ -432,7 +432,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                     <tr 
                       key={member.id}
                       className={`hover:bg-slate-50/80 transition-colors group ${
-                        isSelected ? 'bg-amber-50/60' : ''
+                        isSelected ? 'bg-blue-50/60' : ''
                       }`}
                     >
                       {/* Checkbox */}
@@ -441,7 +441,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => toggleSelectOne(member.id)}
-                          className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                          className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                         />
                       </td>
 
@@ -449,7 +449,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                       <td className="py-3 px-3.5">
                         <button
                           onClick={() => onSelectMember(member)}
-                          className="text-left font-semibold text-slate-900 hover:text-amber-700 transition-colors block text-sm"
+                          className="text-left font-semibold text-slate-900 hover:text-blue-700 transition-colors block text-sm"
                         >
                           {member.employeeName}
                         </button>
@@ -463,7 +463,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                         <div className="text-slate-800 font-semibold line-clamp-1">
                           {member.department}
                         </div>
-                        <div className="text-[10px] text-amber-800 font-mono flex items-center gap-1">
+                        <div className="text-[10px] text-blue-800 font-mono flex items-center gap-1">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                           VFAR Island
                         </div>
@@ -494,13 +494,13 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                           {member.email.leadersDL && (
                             <>
                               <span className="text-slate-300">·</span>
-                              <span className="text-amber-800 font-medium">Leaders DL</span>
+                              <span className="text-blue-800 font-medium">Leaders DL</span>
                             </>
                           )}
                           {member.email.dhDL && (
                             <>
                               <span className="text-slate-300">·</span>
-                              <span className="text-amber-700 font-medium">DH DL</span>
+                              <span className="text-blue-700 font-medium">DH DL</span>
                             </>
                           )}
                         </div>
@@ -519,10 +519,10 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                             <button
                               type="button"
                               onClick={() => onViewHardwareQR ? onViewHardwareQR(member.hardware.assetTag) : onSelectMember(member)}
-                              className="text-amber-800 font-semibold hover:text-amber-950 hover:bg-amber-100/80 px-1.5 py-0.5 rounded border border-amber-300/80 transition-colors flex items-center gap-1 group shadow-2xs"
+                              className="text-blue-800 font-semibold hover:text-blue-950 hover:bg-blue-100/80 px-1.5 py-0.5 rounded border border-blue-300/80 transition-colors flex items-center gap-1 group shadow-sm"
                               title="Click to view QR Code sticker & hardware assignment details"
                             >
-                              <QrCode className="w-3 h-3 text-amber-700 group-hover:scale-110 transition-transform" />
+                              <QrCode className="w-3 h-3 text-blue-700 group-hover:scale-110 transition-transform" />
                               <span>{member.hardware.assetTag}</span>
                             </button>
                           ) : member.status !== 'Offboarded' ? (
@@ -557,7 +557,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                           {member.security.visionline.assigned && (
                             <>
                               <span className="text-slate-300">·</span>
-                              <span className="text-amber-800 flex items-center gap-0.5" title="Visionline keycard access">
+                              <span className="text-blue-800 flex items-center gap-0.5" title="Visionline keycard access">
                                 <KeyRound className="w-3 h-3" /> Key
                               </span>
                             </>
@@ -579,12 +579,12 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                             </span>
                           )}
                           {member.systems.oracleFusion.assigned && (
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-medium" title="Oracle Fusion ERP">
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 font-medium" title="Oracle Fusion ERP">
                               Fusion
                             </span>
                           )}
                           {member.systems.zenoti.assigned && (
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 font-medium" title="Zenoti Spa">
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-violet-50 text-violet-800 border border-violet-200 font-medium" title="Zenoti Spa">
                               Zenoti
                             </span>
                           )}
@@ -609,7 +609,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                           {onViewMemberQR && (
                             <button
                               onClick={() => onViewMemberQR(member)}
-                              className="p-1.5 text-amber-700 hover:text-amber-900 hover:bg-amber-100/80 rounded transition-colors"
+                              className="p-1.5 text-blue-700 hover:text-blue-900 hover:bg-blue-100/80 rounded transition-colors"
                               title="Generate & View Staff QR Pass"
                             >
                               <QrCode className="w-4 h-4" />
@@ -624,7 +624,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                           </button>
                           <button
                             onClick={() => onEditMember(member)}
-                            className="p-1.5 text-slate-500 hover:text-amber-700 hover:bg-slate-100 rounded transition-colors"
+                            className="p-1.5 text-slate-500 hover:text-blue-700 hover:bg-slate-100 rounded transition-colors"
                             title="Edit Record"
                           >
                             <Edit3 className="w-4 h-4" />

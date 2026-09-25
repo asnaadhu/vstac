@@ -98,11 +98,11 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
 
   const getCategoryIcon = (cat: DeviceCategory) => {
     switch (cat) {
-      case 'Laptop': return <Laptop className="w-4 h-4 text-amber-600" />;
+      case 'Laptop': return <Laptop className="w-4 h-4 text-blue-600" />;
       case 'Desktop': 
-      case 'Workstation': return <Monitor className="w-4 h-4 text-indigo-600" />;
+      case 'Workstation': return <Monitor className="w-4 h-4 text-cyan-600" />;
       case 'Tablet': return <Tablet className="w-4 h-4 text-emerald-600" />;
-      case 'POS Terminal': return <Store className="w-4 h-4 text-purple-600" />;
+      case 'POS Terminal': return <Store className="w-4 h-4 text-teal-600" />;
       case 'Mobile Phone': return <Smartphone className="w-4 h-4 text-sky-600" />;
       default: return <HardDrive className="w-4 h-4 text-slate-500" />;
     }
@@ -267,9 +267,9 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
       <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-xl w-full overflow-hidden my-auto">
         
         {/* Modal Top Header */}
-        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-amber-50/80 via-white to-amber-50/50">
+        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-50/80 via-white to-blue-50/50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow-xs ring-1 ring-amber-400/40">
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs ring-1 ring-blue-400/40">
               <QrCode className="w-5 h-5" />
             </div>
             <div>
@@ -277,7 +277,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">
                   QR ASSET STICKER
                 </span>
-                <span className="text-xs font-semibold text-amber-800">
+                <span className="text-xs font-semibold text-blue-800">
                   Avani+ Fares Maldives
                 </span>
               </div>
@@ -301,7 +301,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
           {/* Printable Sticker Section */}
           <div 
             ref={printRef}
-            className="p-4 bg-gradient-to-br from-slate-50 to-amber-50/30 border-2 border-slate-800 rounded-2xl shadow-xs"
+            className="p-4 bg-gradient-to-br from-slate-50 to-blue-50/30 border-2 border-slate-800 rounded-2xl shadow-xs"
           >
             <div className="flex flex-col sm:flex-row items-center gap-4">
               
@@ -326,8 +326,8 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
               {/* Asset Badge & Core Identity */}
               <div className="flex-1 w-full space-y-2 text-left">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1">
-                    <Building2 className="w-3.5 h-3.5 text-amber-700" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 flex items-center gap-1">
+                    <Building2 className="w-3.5 h-3.5 text-blue-700" />
                     Avani+ Fares Maldives Resort
                   </span>
                   <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-900 text-white font-bold">
@@ -336,7 +336,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                 </div>
 
                 <div>
-                  <div className="text-xl font-mono font-bold text-amber-900 tracking-tight">
+                  <div className="text-xl font-mono font-bold text-blue-900 tracking-tight">
                     {item.assetTag}
                   </div>
                   <div className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
@@ -363,8 +363,8 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                         Available in IT Stock
                       </span>
                     ) : (
-                      <span className="font-bold text-amber-800 flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                      <span className="font-bold text-blue-800 flex items-center gap-1">
+                        <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                         Under Maintenance
                       </span>
                     )}
@@ -384,28 +384,28 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
           </div>
 
           {/* Unique Item Deep Link URL Card */}
-          <div className="bg-amber-50/70 border border-amber-200/90 rounded-xl p-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+          <div className="bg-blue-50/70 border border-blue-200/90 rounded-xl p-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-900 uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <div className="flex items-center gap-1.5 text-[11px] font-bold text-blue-900 uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
                 <span>Unique Scan Deep Link (Encoded in QR)</span>
-                <span className="text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded bg-amber-200/70 text-amber-900 ml-1">
+                <span className="text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded bg-blue-200/70 text-blue-900 ml-1">
                   ?part={item.id}
                 </span>
               </div>
-              <div className="font-mono text-xs text-slate-800 truncate select-all mt-1 bg-white/95 border border-amber-200 rounded-lg px-2.5 py-1.5 shadow-2xs">
+              <div className="font-mono text-xs text-slate-800 truncate select-all mt-1 bg-white/95 border border-blue-200 rounded-lg px-2.5 py-1.5 shadow-sm">
                 {`${window.location.origin}${window.location.pathname}?part=${encodeURIComponent(item.id)}`}
               </div>
-              <div className="text-[10px] text-amber-800/80 mt-1">
+              <div className="text-[10px] text-blue-800/80 mt-1">
                 Scanning or loading this full URL immediately bypasses the home screen and opens this part's details.
               </div>
             </div>
             <button
               type="button"
               onClick={handleCopyLink}
-              className="shrink-0 self-start sm:self-center flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-amber-900 bg-white hover:bg-amber-100/80 border border-amber-300 rounded-lg shadow-2xs transition-colors cursor-pointer"
+              className="shrink-0 self-start sm:self-center flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-900 bg-white hover:bg-blue-100/80 border border-blue-300 rounded-lg shadow-sm transition-colors cursor-pointer"
             >
-              {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-amber-700" />}
+              {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-blue-700" />}
               <span>{isCopied ? 'Link Copied!' : 'Copy Deep Link'}</span>
             </button>
           </div>
@@ -413,14 +413,14 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
           {/* Detailed Hardware Specifications Table */}
           <div className="bg-slate-50/70 border border-slate-200 rounded-xl p-4 space-y-3">
             <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-              <HardDrive className="w-3.5 h-3.5 text-amber-600" />
+              <HardDrive className="w-3.5 h-3.5 text-blue-600" />
               Complete Hardware & Inventory Record
             </h4>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
               <div>
                 <span className="text-slate-500 text-[11px] block">Asset Tag</span>
-                <span className="font-mono font-bold text-amber-900">{item.assetTag}</span>
+                <span className="font-mono font-bold text-blue-900">{item.assetTag}</span>
               </div>
               <div>
                 <span className="text-slate-500 text-[11px] block">Device Category</span>
@@ -436,7 +436,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
               </div>
               <div>
                 <span className="text-slate-500 text-[11px] block">Inventory Status</span>
-                <span className={`font-bold ${item.status === 'Assigned' ? 'text-blue-700' : item.status === 'Available' ? 'text-emerald-700' : 'text-amber-700'}`}>
+                <span className={`font-bold ${item.status === 'Assigned' ? 'text-blue-700' : item.status === 'Available' ? 'text-emerald-700' : 'text-blue-700'}`}>
                   {item.status}
                 </span>
               </div>
@@ -475,7 +475,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                         onClose();
                         onSelectMember(assignedMember);
                       }}
-                      className="text-[11px] font-semibold text-blue-700 hover:text-blue-900 bg-white hover:bg-blue-100/70 px-2 py-1 rounded-md border border-blue-200 transition-colors flex items-center gap-1 shadow-2xs"
+                      className="text-[11px] font-semibold text-blue-700 hover:text-blue-900 bg-white hover:bg-blue-100/70 px-2 py-1 rounded-md border border-blue-200 transition-colors flex items-center gap-1 shadow-sm"
                     >
                       <span>View Staff Profile</span>
                       <ExternalLink className="w-3 h-3" />
@@ -525,7 +525,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                     <button
                       type="button"
                       onClick={() => onAssign(item)}
-                      className="px-2.5 py-1 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-2xs transition-colors flex items-center gap-1"
+                      className="px-2.5 py-1 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-colors flex items-center gap-1"
                     >
                       <UserCheck className="w-3.5 h-3.5" />
                       <span>Assign to Staff Member</span>
@@ -547,7 +547,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                 type="button"
                 onClick={() => setQrMode('url')}
                 className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
-                  qrMode === 'url' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                  qrMode === 'url' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 Web Direct Link (Scan to Open)
@@ -556,7 +556,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                 type="button"
                 onClick={() => setQrMode('details')}
                 className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
-                  qrMode === 'details' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                  qrMode === 'details' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 Full JSON Payload
@@ -570,7 +570,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
               <button
                 type="button"
                 onClick={handlePrintSticker}
-                className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-2xs transition-colors"
+                className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-sm transition-colors"
                 title="Print standard 80mm x 50mm asset label"
               >
                 <Printer className="w-4 h-4 text-slate-600" />
@@ -580,7 +580,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
               <button
                 type="button"
                 onClick={handleDownloadQR}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-2xs transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-sm transition-colors"
                 title="Download QR code image"
               >
                 <Download className="w-4 h-4 text-slate-500" />
@@ -590,7 +590,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-2xs transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-sm transition-colors"
                 title="Copy shareable asset link"
               >
                 {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-slate-500" />}
@@ -606,7 +606,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                     onClose();
                     onAssign(item);
                   }}
-                  className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-xs transition-colors"
+                  className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors"
                 >
                   <UserCheck className="w-4 h-4" />
                   <span>Assign to Staff</span>
@@ -620,7 +620,7 @@ export const HardwareQRModal: React.FC<HardwareQRModalProps> = ({
                     onUnassign(item.id);
                     onClose();
                   }}
-                  className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl shadow-2xs transition-colors"
+                  className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl shadow-sm transition-colors"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Return to Stock</span>

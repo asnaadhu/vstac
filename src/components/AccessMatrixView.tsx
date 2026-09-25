@@ -54,11 +54,11 @@ export const AccessMatrixView: React.FC<AccessMatrixViewProps> = ({
     <div className="space-y-4">
       
       {/* Overview & Quick Filters */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-              <Server className="w-4 h-4 text-amber-600" /> Enterprise Access Matrix
+              <Server className="w-4 h-4 text-blue-600" /> Enterprise Access Matrix
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Live authorization matrix across Minor Hotels core hospitality platforms and PMS tools. Click any cell to toggle.
@@ -73,11 +73,11 @@ export const AccessMatrixView: React.FC<AccessMatrixViewProps> = ({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search staff in matrix..."
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
               />
             </div>
 
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 font-semibold text-xs shrink-0">
+            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-blue-50 border border-blue-200 rounded-lg text-blue-900 font-semibold text-xs shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span className="font-mono font-bold">VFAR</span>
               <span className="text-[11px] text-slate-600 hidden sm:inline">· {activeMembers.length} active staff</span>
@@ -90,14 +90,14 @@ export const AccessMatrixView: React.FC<AccessMatrixViewProps> = ({
           {systemsCols.map(col => (
             <div key={col.key} className="shrink-0 flex items-center gap-1.5 px-2.5 py-1 bg-slate-50 rounded-lg border border-slate-200">
               <span className="text-slate-600 font-medium">{col.label}:</span>
-              <strong className="text-amber-700 font-mono">{col.count}</strong>
+              <strong className="text-blue-700 font-mono">{col.count}</strong>
             </div>
           ))}
         </div>
       </div>
 
       {/* Access Grid Table */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-700">
             <thead className="bg-slate-50/90 text-slate-600 border-b border-slate-200 sticky top-0 select-none">
@@ -159,7 +159,7 @@ export const AccessMatrixView: React.FC<AccessMatrixViewProps> = ({
                             onClick={() => onToggleSystemAccess(member.id, col.key as any, assigned)}
                             className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition-all ${
                               assigned
-                                ? 'bg-amber-100/80 text-amber-900 border border-amber-300 hover:bg-amber-200 shadow-2xs font-semibold'
+                                ? 'bg-blue-100/80 text-blue-900 border border-blue-300 hover:bg-blue-200 shadow-sm font-semibold'
                                 : 'bg-slate-50 text-slate-400 border border-slate-200 hover:text-slate-700 hover:border-slate-300'
                             }`}
                             title={remarks ? `${col.label}: ${remarks}` : `${col.label}: ${assigned ? 'Assigned' : 'Unassigned'} (Click to toggle)`}

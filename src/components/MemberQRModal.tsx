@@ -250,12 +250,12 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
         {/* Top Header */}
         <div className="px-5 py-4 bg-slate-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-blue-500/20 border border-blue-400/40 text-blue-400 flex items-center justify-center">
               <QrCode className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-blue-400">
                   Digital Staff IT ID & Clearance Pass
                 </span>
                 <span className="text-slate-500">·</span>
@@ -280,25 +280,25 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
         <div className="p-5 overflow-y-auto space-y-5 text-xs text-slate-700">
           
           {/* Direct Scan Deep Link Banner */}
-          <div className="bg-amber-50/90 border border-amber-200/90 rounded-xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="bg-blue-50/90 border border-blue-200/90 rounded-xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="space-y-1 min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 text-[10px] font-bold bg-amber-200 text-amber-900 rounded-md tracking-wide uppercase">
+                <span className="px-2 py-0.5 text-[10px] font-bold bg-blue-200 text-blue-900 rounded-md tracking-wide uppercase">
                   Direct Deep Link URL
                 </span>
-                <span className="text-[11px] text-amber-900 font-medium">Bypasses home screen and opens staff profile immediately</span>
+                <span className="text-[11px] text-blue-900 font-medium">Bypasses home screen and opens staff profile immediately</span>
               </div>
-              <div className="font-mono text-[11px] text-slate-700 truncate select-all bg-white px-2.5 py-1.5 rounded-lg border border-amber-200/80">
+              <div className="font-mono text-[11px] text-slate-700 truncate select-all bg-white px-2.5 py-1.5 rounded-lg border border-blue-200/80">
                 {deepLinkUrl}
               </div>
             </div>
 
             <button
               onClick={handleCopyLink}
-              className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold shadow-2xs transition-all ${
+              className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition-all ${
                 isCopied 
                   ? 'bg-emerald-600 text-white' 
-                  : 'bg-amber-600 hover:bg-amber-700 text-white'
+                  : 'bg-blue-600 hover:bg-blue-700 text-white'
               }`}
             >
               {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -317,7 +317,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                 onClick={() => setQrMode('url')}
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                   qrMode === 'url'
-                    ? 'bg-white text-slate-900 shadow-2xs'
+                    ? 'bg-white text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -328,7 +328,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                 onClick={() => setQrMode('vcard')}
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                   qrMode === 'vcard'
-                    ? 'bg-white text-slate-900 shadow-2xs'
+                    ? 'bg-white text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -340,7 +340,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
           {/* Printable Staff Badge Preview */}
           <div 
             ref={printRef}
-            className="border-2 border-amber-500/40 rounded-2xl p-5 bg-gradient-to-br from-amber-50/60 via-white to-slate-50 relative overflow-hidden shadow-xs"
+            className="border-2 border-blue-500/40 rounded-2xl p-5 bg-gradient-to-br from-blue-50/60 via-white to-slate-50 relative overflow-hidden shadow-xs"
           >
             <div className="flex flex-col sm:flex-row items-center gap-5">
               
@@ -369,7 +369,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                 
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-100 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
                       Avani+ Fares Maldives
                     </span>
                     <span className="text-slate-400">·</span>
@@ -379,7 +379,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                   <h3 className="text-xl font-extrabold text-slate-900 tracking-tight leading-tight">
                     {member.employeeName}
                   </h3>
-                  <div className="text-xs font-semibold text-amber-800 mt-0.5">
+                  <div className="text-xs font-semibold text-blue-800 mt-0.5">
                     {member.jobTitle}
                   </div>
                   <div className="text-xs text-slate-600 mt-0.5 flex items-center gap-1.5">
@@ -404,9 +404,9 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                   </div>
                   <div>
                     <span className="text-slate-500">Assigned Hardware:</span>
-                    <div className="font-mono font-semibold text-amber-900 truncate">
+                    <div className="font-mono font-semibold text-blue-900 truncate">
                       {member.hardware.assetTag ? (
-                        <span className="bg-amber-100 px-1 rounded">{member.hardware.assetTag}</span>
+                        <span className="bg-blue-100 px-1 rounded">{member.hardware.assetTag}</span>
                       ) : (
                         <span className="text-slate-400">No Hardware Tag</span>
                       )}
@@ -442,7 +442,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
 
             <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
               <div className="text-slate-500 text-[11px] flex items-center gap-1 mb-1">
-                <Laptop className="w-3.5 h-3.5 text-amber-600" /> Device Model
+                <Laptop className="w-3.5 h-3.5 text-blue-600" /> Device Model
               </div>
               <div className="text-slate-900 font-medium truncate">
                 {member.hardware.pcLaptopModel || 'BYOD / None'}
@@ -451,7 +451,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onViewHardware(member.hardware.assetTag)}
-                  className="text-[10px] font-semibold text-amber-800 hover:underline mt-0.5 flex items-center gap-1"
+                  className="text-[10px] font-semibold text-blue-800 hover:underline mt-0.5 flex items-center gap-1"
                 >
                   <span>View Equipment QR ({member.hardware.assetTag})</span>
                 </button>
@@ -460,7 +460,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
 
             <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
               <div className="text-slate-500 text-[11px] flex items-center gap-1 mb-1">
-                <KeyRound className="w-3.5 h-3.5 text-purple-600" /> Systems & VPN
+                <KeyRound className="w-3.5 h-3.5 text-violet-600" /> Systems & VPN
               </div>
               <div className="text-slate-900 font-medium truncate">
                 {[
@@ -481,7 +481,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
         {/* Footer Actions */}
         <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
           <div className="text-[11px] text-slate-500 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
             <span>Encodes permanent direct deep link. Compatible with any mobile camera.</span>
           </div>
 
@@ -489,7 +489,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
             <button
               type="button"
               onClick={handleDownloadQR}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-100 rounded-lg border border-slate-300 transition-colors shadow-2xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-100 rounded-lg border border-slate-300 transition-colors shadow-sm"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Save PNG</span>
@@ -498,7 +498,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
             <button
               type="button"
               onClick={handlePrintBadge}
-              className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-lg shadow-2xs transition-colors"
+              className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Print Badge Card</span>

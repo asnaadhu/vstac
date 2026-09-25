@@ -123,11 +123,11 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
 
   const getCategoryIcon = (cat: DeviceCategory) => {
     switch (cat) {
-      case 'Laptop': return <Laptop className="w-4 h-4 text-amber-600" />;
+      case 'Laptop': return <Laptop className="w-4 h-4 text-blue-600" />;
       case 'Desktop': 
-      case 'Workstation': return <Monitor className="w-4 h-4 text-indigo-600" />;
+      case 'Workstation': return <Monitor className="w-4 h-4 text-cyan-600" />;
       case 'Tablet': return <Tablet className="w-4 h-4 text-emerald-600" />;
-      case 'POS Terminal': return <Store className="w-4 h-4 text-purple-600" />;
+      case 'POS Terminal': return <Store className="w-4 h-4 text-teal-600" />;
       case 'Mobile Phone': return <Smartphone className="w-4 h-4 text-sky-600" />;
       default: return <HardDrive className="w-4 h-4 text-slate-500" />;
     }
@@ -229,10 +229,10 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
     <div className="space-y-5">
       
       {/* 1. Fleet Operations Header */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center font-bold shadow-xs ring-1 ring-amber-400/30">
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white flex items-center justify-center font-bold shadow-xs ring-1 ring-blue-400/30">
               <Box className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -256,16 +256,16 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => setIsScannerOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-2xs transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-sm transition-all"
               title="Scan QR Code with camera or lookup tag"
             >
-              <Camera className="w-4 h-4 text-amber-700" />
+              <Camera className="w-4 h-4 text-blue-700" />
               <span>Scan / Lookup QR</span>
             </button>
 
             <button
               onClick={handleOpenAddModal}
-              className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-xs transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+              className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span>Register New Device</span>
@@ -278,8 +278,8 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
         <div 
           onClick={() => setStatusTab('all')}
-          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-2xs transition-all ${
-            statusTab === 'all' ? 'ring-2 ring-amber-500 border-amber-500' : 'border-slate-200 hover:border-slate-300'
+          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-sm transition-all ${
+            statusTab === 'all' ? 'ring-2 ring-blue-500 border-blue-500' : 'border-slate-200 hover:border-slate-300'
           }`}
         >
           <div className="text-slate-600 text-xs font-semibold uppercase tracking-wider mb-1 flex items-center gap-1.5">
@@ -291,7 +291,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
 
         <div 
           onClick={() => setStatusTab('available')}
-          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-2xs transition-all ${
+          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-sm transition-all ${
             statusTab === 'available' ? 'ring-2 ring-emerald-500 border-emerald-500 bg-emerald-50/20' : 'border-slate-200 hover:border-slate-300'
           }`}
         >
@@ -304,7 +304,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
 
         <div 
           onClick={() => setStatusTab('assigned')}
-          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-2xs transition-all ${
+          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-sm transition-all ${
             statusTab === 'assigned' ? 'ring-2 ring-blue-500 border-blue-500 bg-blue-50/20' : 'border-slate-200 hover:border-slate-300'
           }`}
         >
@@ -317,20 +317,20 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
 
         <div 
           onClick={() => setStatusTab('maintenance')}
-          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-2xs transition-all ${
-            statusTab === 'maintenance' ? 'ring-2 ring-amber-500 border-amber-500 bg-amber-50/20' : 'border-slate-200 hover:border-slate-300'
+          className={`cursor-pointer bg-white border rounded-xl p-4 shadow-sm transition-all ${
+            statusTab === 'maintenance' ? 'ring-2 ring-blue-500 border-blue-500 bg-blue-50/20' : 'border-slate-200 hover:border-slate-300'
           }`}
         >
-          <div className="text-amber-700 text-xs font-semibold uppercase tracking-wider mb-1 flex items-center gap-1.5">
-            <Wrench className="w-3.5 h-3.5 text-amber-600" /> Under Maintenance
+          <div className="text-blue-700 text-xs font-semibold uppercase tracking-wider mb-1 flex items-center gap-1.5">
+            <Wrench className="w-3.5 h-3.5 text-blue-600" /> Under Maintenance
           </div>
-          <div className="text-2xl font-bold text-amber-700 font-mono">{maintenanceCount}</div>
+          <div className="text-2xl font-bold text-blue-700 font-mono">{maintenanceCount}</div>
           <div className="text-[11px] text-slate-500 mt-1">Repairs, testing & parts order</div>
         </div>
       </div>
 
       {/* 3. Filter and Search Bar */}
-      <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs space-y-3">
+      <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-3">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           
           {/* Status Tabs */}
@@ -338,7 +338,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
             <button
               onClick={() => setStatusTab('all')}
               className={`px-3 py-1.5 font-semibold rounded-md transition-colors whitespace-nowrap ${
-                statusTab === 'all' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                statusTab === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               All Devices ({totalCount})
@@ -346,7 +346,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
             <button
               onClick={() => setStatusTab('available')}
               className={`px-3 py-1.5 font-semibold rounded-md transition-colors whitespace-nowrap flex items-center gap-1.5 ${
-                statusTab === 'available' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                statusTab === 'available' ? 'bg-white text-emerald-800 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -355,7 +355,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
             <button
               onClick={() => setStatusTab('assigned')}
               className={`px-3 py-1.5 font-semibold rounded-md transition-colors whitespace-nowrap flex items-center gap-1.5 ${
-                statusTab === 'assigned' ? 'bg-white text-blue-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                statusTab === 'assigned' ? 'bg-white text-blue-800 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <span className="w-2 h-2 rounded-full bg-blue-500"></span>
@@ -364,10 +364,10 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
             <button
               onClick={() => setStatusTab('maintenance')}
               className={`px-3 py-1.5 font-semibold rounded-md transition-colors whitespace-nowrap flex items-center gap-1.5 ${
-                statusTab === 'maintenance' ? 'bg-white text-amber-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
+                statusTab === 'maintenance' ? 'bg-white text-blue-800 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span className="w-2 h-2 rounded-full bg-blue-500"></span>
               Maintenance ({maintenanceCount})
             </button>
           </div>
@@ -381,14 +381,14 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search asset tag, model, serial, staff..."
-                className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+                className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
               />
             </div>
 
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
             >
               <option value="all">All Categories</option>
               <option value="Laptop">Laptops</option>
@@ -403,7 +403,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
       </div>
 
       {/* 4. Hardware Inventory Table */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-700">
             <thead className="bg-slate-50/90 text-slate-600 border-b border-slate-200 select-none">
@@ -437,10 +437,10 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                         <button
                           type="button"
                           onClick={() => handleViewItemDetails(item)}
-                          className="flex items-center gap-1.5 font-mono font-bold text-amber-800 hover:text-amber-950 hover:bg-amber-100/70 px-2 py-1 rounded-lg border border-amber-200/80 transition-colors group cursor-pointer"
+                          className="flex items-center gap-1.5 font-mono font-bold text-blue-800 hover:text-blue-950 hover:bg-blue-100/70 px-2 py-1 rounded-lg border border-blue-200/80 transition-colors group cursor-pointer"
                           title="Click to view QR Code sticker & full hardware details (deep link URL ?part=ID)"
                         >
-                          <QrCode className="w-3.5 h-3.5 text-amber-700 group-hover:scale-110 transition-transform" />
+                          <QrCode className="w-3.5 h-3.5 text-blue-700 group-hover:scale-110 transition-transform" />
                           <span>{item.assetTag}</span>
                         </button>
                       </td>
@@ -487,7 +487,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => onSelectMember(assignedMember)}
-                                  className="font-bold text-slate-900 hover:text-amber-800 transition-colors text-left"
+                                  className="font-bold text-slate-900 hover:text-blue-800 transition-colors text-left"
                                 >
                                   {item.assignedMemberName || assignedMember.employeeName}
                                 </button>
@@ -507,8 +507,8 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                             <span>Available in IT Stock</span>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-1.5 text-amber-700 font-semibold">
-                            <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                          <div className="flex items-center gap-1.5 text-blue-700 font-semibold">
+                            <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                             <span>Under Repair / Testing</span>
                           </div>
                         )}
@@ -535,7 +535,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                           {item.status === 'Available' ? (
                             <button
                               onClick={() => handleOpenAssignModal(item)}
-                              className="px-2.5 py-1 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-lg shadow-2xs transition-colors flex items-center gap-1"
+                              className="px-2.5 py-1 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors flex items-center gap-1"
                               title="Assign this hardware device to a resort team member"
                             >
                               <UserCheck className="w-3.5 h-3.5" />
@@ -562,7 +562,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                           <button
                             type="button"
                             onClick={() => handleViewItemDetails(item)}
-                            className="p-1.5 text-amber-700 hover:text-amber-900 hover:bg-amber-50 rounded transition-colors"
+                            className="p-1.5 text-blue-700 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors"
                             title="View QR Code & Full Details (?part=ID)"
                           >
                             <QrCode className="w-3.5 h-3.5" />
@@ -604,9 +604,9 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-lg w-full overflow-hidden">
             
-            <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-amber-50/50">
+            <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-blue-50/50">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-amber-600 text-white flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center">
                   <UserCheck className="w-5 h-5" />
                 </div>
                 <div>
@@ -634,7 +634,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   <span className="text-xs font-bold text-slate-900">
                     {assigningItem.deviceModel}
                   </span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-100 text-blue-900 border border-blue-300">
                     {assigningItem.assetTag}
                   </span>
                 </div>
@@ -651,13 +651,13 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
               {/* Select Team Member */}
               <div>
                 <label className="block text-xs font-semibold text-slate-800 mb-1">
-                  Select Team Member to Receive Hardware <span className="text-amber-600">*</span>
+                  Select Team Member to Receive Hardware <span className="text-blue-600">*</span>
                 </label>
                 <select
                   required
                   value={selectedMemberId}
                   onChange={(e) => setSelectedMemberId(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 >
                   <option value="">-- Choose active resort team member --</option>
                   {members
@@ -686,7 +686,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   value={assignmentRemarks}
                   onChange={(e) => setAssignmentRemarks(e.target.value)}
                   placeholder="Includes 65W USB-C charger, laptop bag, wireless mouse, HDMI adapter..."
-                  className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
               </div>
 
@@ -701,7 +701,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                 <button
                   type="submit"
                   disabled={!selectedMemberId}
-                  className="px-4 py-2 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded-xl shadow-xs"
+                  className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-xl shadow-xs"
                 >
                   Confirm Hardware Assignment
                 </button>
@@ -717,9 +717,9 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-lg w-full overflow-hidden">
             
-            <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-amber-50/50">
+            <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-blue-50/50">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-amber-600 text-white flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center">
                   <HardDrive className="w-5 h-5" />
                 </div>
                 <div>
@@ -750,7 +750,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   <select
                     value={formCategory}
                     onChange={(e) => setFormCategory(e.target.value as DeviceCategory)}
-                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   >
                     <option value="Laptop">Laptop</option>
                     <option value="Desktop">Desktop / Tiny PC</option>
@@ -770,7 +770,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   <select
                     value={formCondition}
                     onChange={(e) => setFormCondition(e.target.value as HardwareCondition)}
-                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   >
                     <option value="Brand New">Brand New</option>
                     <option value="Good">Good / Working</option>
@@ -791,7 +791,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   value={formModel}
                   onChange={(e) => setFormModel(e.target.value)}
                   placeholder="e.g. Lenovo ThinkPad T14s Gen 4"
-                  className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
               </div>
 
@@ -806,7 +806,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                     value={formSerial}
                     onChange={(e) => setFormSerial(e.target.value)}
                     placeholder="e.g. PF-VFAR-XXXX"
-                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   />
                 </div>
 
@@ -821,7 +821,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                       value={formTag}
                       onChange={(e) => setFormTag(e.target.value)}
                       placeholder="e.g. VFAR-IT-0110"
-                      className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-amber-800 font-mono font-bold focus:outline-none focus:ring-1 focus:ring-amber-500"
+                      className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-blue-800 font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                     />
                     <button
                       type="button"
@@ -845,7 +845,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   value={formSpecs}
                   onChange={(e) => setFormSpecs(e.target.value)}
                   placeholder="e.g. Intel Core i7-1365U, 16GB RAM, 512GB SSD"
-                  className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
               </div>
 
@@ -858,7 +858,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   <select
                     value={formAssignToMemberId}
                     onChange={(e) => setFormAssignToMemberId(e.target.value)}
-                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   >
                     <option value="">-- Leave in available IT stock --</option>
                     {members
@@ -882,7 +882,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   value={formNotes}
                   onChange={(e) => setFormNotes(e.target.value)}
                   placeholder="e.g. IT Storage Cabinet A, shelf 2"
-                  className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
               </div>
 
@@ -897,7 +897,7 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                 <button
                   type="submit"
                   disabled={!formModel.trim()}
-                  className="px-4 py-2 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded-xl shadow-xs"
+                  className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-xl shadow-xs"
                 >
                   {editingItem ? 'Save Changes' : 'Register Equipment'}
                 </button>

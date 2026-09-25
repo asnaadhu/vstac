@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  Building2, 
-  Menu, 
-  Search, 
-  Plus, 
-  Download, 
+import {
+  Building2,
+  Menu,
+  Search,
+  Plus,
+  Download,
   RotateCcw,
   QrCode
 } from 'lucide-react';
@@ -45,15 +45,11 @@ export const Header: React.FC<HeaderProps> = ({
     }
   };
 
-  const activeMembers = members.filter(m => m.status === 'Active').length;
-  const operaSeats = members.filter(m => m.systems.operaCloud.assigned && m.status === 'Active').length;
-  const m365Assigned = members.filter(m => m.email.licenseType !== 'None' && m.status === 'Active').length;
-
   return (
-    <header className="border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-20 shadow-xs">
+    <header className="border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-20 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
-          
+
           {/* Mobile Menu Toggle & Title */}
           <div className="flex items-center gap-3">
             <button
@@ -66,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 hidden sm:inline">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 hidden sm:inline">
                   Avani+ Fares
                 </span>
                 <span className="text-slate-300 hidden sm:inline">/</span>
@@ -79,17 +75,17 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Quick Search & Actions */}
           <div className="flex items-center gap-2.5">
-            
+
             {/* Avani+ Fares Identity Badge */}
-            <div className="hidden md:flex items-center gap-2.5 px-3 py-1.5 bg-amber-50/80 border border-amber-200/90 rounded-xl">
-              <div className="w-6 h-6 rounded-lg bg-amber-700 text-white font-bold text-[10px] flex items-center justify-center font-mono shadow-xs">
+            <div className="hidden md:flex items-center gap-2.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl">
+              <div className="w-6 h-6 rounded-lg bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">
                 VFAR
               </div>
               <div className="flex flex-col text-left">
                 <span className="text-xs font-bold text-slate-900 leading-tight">
                   Avani+ Fares Maldives Resort
                 </span>
-                <span className="text-[10px] text-amber-800 font-medium leading-none">
+                <span className="text-[10px] text-slate-500 font-medium leading-none">
                   Baa Atoll · UNESCO Biosphere Reserve
                 </span>
               </div>
@@ -103,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 placeholder="Search staff, serial, tag..."
-                className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-colors"
               />
             </div>
 
@@ -112,16 +108,16 @@ export const Header: React.FC<HeaderProps> = ({
               {onOpenQRScanner && (
                 <button
                   onClick={onOpenQRScanner}
-                  className="p-2 text-amber-800 hover:text-amber-950 bg-amber-50/70 hover:bg-amber-100 border border-amber-300 rounded-xl transition-colors shadow-2xs flex items-center gap-1"
+                  className="p-2 text-blue-700 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition-colors flex items-center gap-1"
                   title="Scan / Lookup Hardware QR Asset Code"
                 >
-                  <QrCode className="w-4 h-4 text-amber-700" />
+                  <QrCode className="w-4 h-4 text-blue-600" />
                 </button>
               )}
 
               <button
                 onClick={onOpenImportExport}
-                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors shadow-2xs"
+                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors"
                 title="Import or Export CSV & JSON data"
               >
                 <Download className="w-4 h-4" />
@@ -129,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onResetDemoData}
-                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors shadow-2xs"
+                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors"
                 title="Reset to seed data"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -139,7 +135,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Add Member CTA */}
             <button
               onClick={onNewMember}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-xs transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span className="hidden sm:inline">Add Member</span>

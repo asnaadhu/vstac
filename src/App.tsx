@@ -731,7 +731,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex font-sans selection:bg-amber-100 selection:text-amber-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex font-sans selection:bg-blue-100 selection:text-blue-900">
       
       {/* Left Sidebar Navigation */}
       <Sidebar
@@ -835,7 +835,7 @@ export default function App() {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-slate-200 bg-white py-4 mt-auto text-xs text-slate-500">
+        <footer className="border-t border-slate-200 bg-white/80 backdrop-blur-sm py-4 mt-auto text-xs text-slate-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
             <div>
               Minor Hotels Global IT Infrastructure & Access Management Portal

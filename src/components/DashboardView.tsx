@@ -97,15 +97,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     <div className="space-y-6">
       
       {/* Executive Header Banner */}
-      <div className="bg-gradient-to-r from-amber-50/90 via-white to-amber-50/50 border border-amber-200/90 rounded-2xl p-5 sm:p-6 shadow-2xs">
+      <div className="bg-gradient-to-r from-blue-50/90 via-white to-blue-50/50 border border-blue-200/90 rounded-2xl p-5 sm:p-6 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 text-white flex items-center justify-center font-bold text-base shrink-0 shadow-sm ring-1 ring-amber-500/40">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white flex items-center justify-center font-bold text-base shrink-0 shadow-sm ring-1 ring-blue-500/40">
               VFAR
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100/70 px-2 py-0.5 rounded border border-amber-300">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-800 bg-blue-100/70 px-2 py-0.5 rounded border border-blue-300">
                   Avani+ Fares Maldives Resort
                 </span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200 flex items-center gap-1">
@@ -132,7 +132,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigateTab('directory')}
-              className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-colors shadow-2xs"
+              className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-colors shadow-sm"
             >
               <span>View Roster</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -147,13 +147,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* KPI 1: Workforce Status */}
         <div 
           onClick={() => onNavigateTab('directory')}
-          className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-amber-400 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-blue-400 transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
             <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-amber-600" /> Active Personnel
+              <Users className="w-3.5 h-3.5 text-blue-600" /> Active Personnel
             </span>
-            <span className="text-[11px] text-slate-400 font-mono group-hover:text-amber-700 transition-colors">
+            <span className="text-[11px] text-slate-400 font-mono group-hover:text-blue-700 transition-colors">
               Directory &rarr;
             </span>
           </div>
@@ -164,14 +164,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </span>
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-500 pt-2 border-t border-slate-100 text-[11px]">
-            <span className="text-amber-800 font-medium">{onboardingMembers.length} Onboarding</span>
+            <span className="text-blue-800 font-medium">{onboardingMembers.length} Onboarding</span>
             <span className="text-slate-300">·</span>
             <span>{offboardedMembers.length} Offboarded</span>
           </div>
         </div>
 
         {/* KPI 2: M365 Monthly SaaS Run-rate */}
-        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
             <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
               <DollarSign className="w-3.5 h-3.5 text-emerald-600" /> M365 SaaS Run-rate
@@ -198,7 +198,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* KPI 3: Hospitality PMS Footprint */}
         <div 
           onClick={() => onNavigateTab('matrix')}
-          className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-sky-400 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-sky-400 transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
             <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
@@ -222,13 +222,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* KPI 4: Asset Tagging Health */}
         <div 
           onClick={() => onNavigateTab('hardware')}
-          className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-amber-400 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-blue-400 transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
             <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" /> Asset Tag Coverage
+              <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Asset Tag Coverage
             </span>
-            <span className="text-[11px] text-slate-400 group-hover:text-indigo-700 transition-colors">
+            <span className="text-[11px] text-slate-400 group-hover:text-blue-700 transition-colors">
               Fleet &rarr;
             </span>
           </div>
@@ -280,7 +280,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Microsoft 365 License Allocation Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
@@ -313,14 +313,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 count: e3Count, 
                 unitCost: '$36/seat',
                 totalCost: `$${(e3Count * 36).toLocaleString()}/mo`,
-                color: 'bg-indigo-600' 
+                color: 'bg-blue-600' 
               },
               { 
                 tier: 'M365 F3 (Hospitality Frontline Worker)', 
                 count: f3Count, 
                 unitCost: '$8/seat',
                 totalCost: `$${(f3Count * 8).toLocaleString()}/mo`,
-                color: 'bg-amber-600' 
+                color: 'bg-blue-600' 
               },
               { 
                 tier: 'Exchange Online (Dedicated Mailbox Only)', 
@@ -364,11 +364,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* Core Hospitality Systems Footprint Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
-                <Server className="w-4 h-4 text-amber-600" /> Hospitality Platforms & System Adoption
+                <Server className="w-4 h-4 text-blue-600" /> Hospitality Platforms & System Adoption
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
                 Property Management, Point-of-Sale, ERP & Guest Service
@@ -376,7 +376,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigateTab('matrix')}
-              className="text-xs font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1"
+              className="text-xs font-semibold text-blue-800 hover:text-blue-950 flex items-center gap-1"
             >
               <span>Access Matrix</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -403,7 +403,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white text-slate-600 font-semibold border border-slate-200">
                     {sys.badge}
                   </span>
-                  <span className="text-lg font-bold text-slate-900 font-mono group-hover:text-amber-700 transition-colors">
+                  <span className="text-lg font-bold text-slate-900 font-mono group-hover:text-blue-700 transition-colors">
                     {sys.count}
                   </span>
                 </div>
@@ -422,7 +422,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* SECTION 2: Avani+ Fares Departmental IT & Systems Allocation Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
@@ -465,15 +465,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   <td className="py-2.5 px-3.5 text-center font-mono text-emerald-700 font-medium">
                     {stat.simphonySeats > 0 ? stat.simphonySeats : '—'}
                   </td>
-                  <td className="py-2.5 px-3.5 text-center font-mono text-indigo-700 font-medium">
+                  <td className="py-2.5 px-3.5 text-center font-mono text-blue-700 font-medium">
                     {stat.m365Assigned}
                   </td>
-                  <td className="py-2.5 px-3.5 text-center font-mono text-amber-700 font-medium">
+                  <td className="py-2.5 px-3.5 text-center font-mono text-blue-700 font-medium">
                     {stat.vfarVpnCount > 0 ? stat.vfarVpnCount : '—'}
                   </td>
                   <td className="py-2.5 px-3.5 text-center">
                     <span className={`inline-flex items-center gap-1 font-mono text-xs font-semibold ${
-                      stat.taggedPct === 100 ? 'text-emerald-700' : 'text-amber-700'
+                      stat.taggedPct === 100 ? 'text-emerald-700' : 'text-blue-700'
                     }`}>
                       {stat.taggedPct}%
                     </span>
@@ -489,11 +489,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Onboarding Operations Queue */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
-                <Users className="w-4 h-4 text-amber-600" /> Pending IT Onboarding Pipeline ({onboardingMembers.length})
+                <Users className="w-4 h-4 text-blue-600" /> Pending IT Onboarding Pipeline ({onboardingMembers.length})
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
                 Staff members currently undergoing account and hardware provisioning
@@ -501,7 +501,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigateTab('lifecycle')}
-              className="text-xs font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1"
+              className="text-xs font-semibold text-blue-800 hover:text-blue-950 flex items-center gap-1"
             >
               <span>View Lifecycle</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -528,7 +528,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-900 border border-blue-300">
                       Provisioning
                     </span>
                   </div>
@@ -539,7 +539,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* Security & Operational Governance Audit Feed */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
@@ -551,7 +551,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigateTab('audit')}
-              className="text-xs font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1"
+              className="text-xs font-semibold text-blue-800 hover:text-blue-950 flex items-center gap-1"
             >
               <span>Full Audit Trail</span>
               <ArrowRight className="w-3.5 h-3.5" />

@@ -42,9 +42,9 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ logs, onClearLogs })
       case 'Updated':
         return 'bg-sky-50 text-sky-800 border-sky-200';
       case 'Status Changed':
-        return 'bg-amber-50 text-amber-900 border-amber-200';
+        return 'bg-blue-50 text-blue-900 border-blue-200';
       case 'Access Modified':
-        return 'bg-purple-50 text-purple-800 border-purple-200';
+        return 'bg-violet-50 text-violet-800 border-violet-200';
       case 'Deleted':
         return 'bg-rose-50 text-rose-800 border-rose-200';
       default:
@@ -56,11 +56,11 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ logs, onClearLogs })
     <div className="space-y-4">
       
       {/* Header & Filter Controls */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-              <History className="w-4 h-4 text-amber-600" /> IT Governance & Audit Trail
+              <History className="w-4 h-4 text-blue-600" /> IT Governance & Audit Trail
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Immutable record of user creation, system credential adjustments, and offboarding events.
@@ -75,14 +75,14 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ logs, onClearLogs })
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search audit trail..."
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
               />
             </div>
 
             <select
               value={filterAction}
               onChange={(e) => setFilterAction(e.target.value)}
-              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+              className="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
             >
               <option value="All">All Actions</option>
               <option value="Created">Created</option>
@@ -95,7 +95,7 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ logs, onClearLogs })
 
             <button
               onClick={handleExportLogs}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg shadow-2xs transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg shadow-sm transition-colors"
             >
               <Download className="w-3.5 h-3.5 text-slate-500" />
               <span>Export Audit</span>
@@ -107,7 +107,7 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ logs, onClearLogs })
                   onClearLogs();
                 }
               }}
-              className="p-1.5 text-slate-500 hover:text-rose-700 bg-white hover:bg-slate-50 rounded-lg border border-slate-200 shadow-2xs"
+              className="p-1.5 text-slate-500 hover:text-rose-700 bg-white hover:bg-slate-50 rounded-lg border border-slate-200 shadow-sm"
               title="Clear Log"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -117,7 +117,7 @@ export const AuditLogView: React.FC<AuditLogViewProps> = ({ logs, onClearLogs })
       </div>
 
       {/* Log Feed */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         {filteredLogs.length === 0 ? (
           <div className="p-12 text-center text-slate-500">
             <AlertCircle className="w-8 h-8 text-slate-400 mx-auto mb-2" />

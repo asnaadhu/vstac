@@ -48,10 +48,10 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       
       {/* 1. Workforce Status */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
           <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <Users className="w-3.5 h-3.5 text-amber-600" /> Personnel Roster
+            <Users className="w-3.5 h-3.5 text-blue-600" /> Personnel Roster
           </span>
           <span className="text-[11px] text-slate-400 font-mono">{total} total</span>
         </div>
@@ -64,9 +64,9 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
         <div className="flex items-center gap-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
           <button 
             onClick={() => onFilterStatus && onFilterStatus('Onboarding')}
-            className="hover:text-amber-800 transition-colors flex items-center gap-1 text-[11px]"
+            className="hover:text-blue-800 transition-colors flex items-center gap-1 text-[11px]"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
             <span>{onboarding} Onboarding</span>
           </button>
           <span className="text-slate-300">·</span>
@@ -81,7 +81,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
       </div>
 
       {/* 2. M365 Licenses */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
           <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
             <Layers className="w-3.5 h-3.5 text-sky-600" /> Microsoft 365
@@ -102,7 +102,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
       </div>
 
       {/* 3. Core Hospitality Systems */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
           <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
             <Server className="w-3.5 h-3.5 text-emerald-600" /> Hotel Systems
@@ -123,10 +123,10 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
       </div>
 
       {/* 4. Hardware & Security Governance */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
           <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" /> Hardware & Security
+            <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Hardware & Security
           </span>
           {missingAssetTag > 0 ? (
             <button 
@@ -154,7 +154,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
           </button>
           <span className="text-slate-300">·</span>
           <div className="flex items-center gap-1">
-            <KeyRound className="w-3 h-3 text-amber-600" />
+            <KeyRound className="w-3 h-3 text-blue-600" />
             <span>Visionline: <strong className="text-slate-800 font-mono">{visionlineCount}</strong></span>
           </div>
         </div>

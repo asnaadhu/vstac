@@ -54,7 +54,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
       {/* Top Level SaaS Cost & Allocation Header */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5 mb-2">
             <DollarSign className="w-4 h-4 text-emerald-600" /> Estimated M365 SaaS Run-rate
           </div>
@@ -67,7 +67,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5 mb-2">
             <Server className="w-4 h-4 text-sky-600" /> Opera Cloud PMS Allocation
           </div>
@@ -80,11 +80,11 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5 mb-2">
-            <ShieldCheck className="w-4 h-4 text-amber-600" /> Elevated Security Privileges
+            <ShieldCheck className="w-4 h-4 text-blue-600" /> Elevated Security Privileges
           </div>
-          <div className="text-3xl font-bold text-amber-800 font-mono">
+          <div className="text-3xl font-bold text-blue-800 font-mono">
             {visionlineCount}
             <span className="text-xs text-slate-500 font-sans font-normal ml-1.5">key encoders</span>
           </div>
@@ -99,7 +99,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Microsoft 365 Tier Breakdown */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 mb-4">
             <Layers className="w-4 h-4 text-sky-600" /> Microsoft 365 License Allocation
           </h3>
@@ -107,8 +107,8 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
           <div className="space-y-3.5">
             {[
               { tier: 'M365 E5 (Enterprise Advanced Security)', count: e5Count, color: 'bg-sky-500' },
-              { tier: 'M365 E3 (Standard Enterprise Cloud)', count: e3Count, color: 'bg-indigo-500' },
-              { tier: 'M365 F3 (Hospitality Frontline Worker)', count: f3Count, color: 'bg-amber-500' },
+              { tier: 'M365 E3 (Standard Enterprise Cloud)', count: e3Count, color: 'bg-blue-400' },
+              { tier: 'M365 F3 (Hospitality Frontline Worker)', count: f3Count, color: 'bg-blue-500' },
               { tier: 'Exchange Online (Dedicated Mailbox)', count: exchangeCount, color: 'bg-emerald-500' },
               { tier: 'No License Assigned (De-provisioned)', count: noneCount, color: 'bg-slate-300' },
             ].map(item => {
@@ -133,9 +133,9 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
         </div>
 
         {/* Enterprise Hospitality Systems Utilization */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 mb-4">
-            <Server className="w-4 h-4 text-amber-600" /> Hotel Systems & Network Utilization
+            <Server className="w-4 h-4 text-blue-600" /> Hotel Systems & Network Utilization
           </h3>
 
           <div className="grid grid-cols-2 gap-3">
@@ -151,7 +151,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
             ].map(sys => (
               <div key={sys.name} className="p-3 bg-slate-50/80 rounded-xl border border-slate-200">
                 <div className="text-xs font-bold text-slate-800">{sys.name}</div>
-                <div className="text-xl font-bold text-amber-700 font-mono mt-1">{sys.count}</div>
+                <div className="text-xl font-bold text-blue-700 font-mono mt-1">{sys.count}</div>
                 <div className="text-[10px] text-slate-500 mt-0.5">{sys.desc}</div>
               </div>
             ))}
@@ -164,7 +164,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Properties */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 mb-3">
             <Building2 className="w-4 h-4 text-emerald-600" /> Personnel by Minor Hotels Property
           </h3>
@@ -186,9 +186,9 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ members }) => {
         </div>
 
         {/* Departments */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 mb-3">
-            <PieChart className="w-4 h-4 text-amber-600" /> Personnel by Operational Department
+            <PieChart className="w-4 h-4 text-blue-600" /> Personnel by Operational Department
           </h3>
 
           <div className="space-y-2.5">

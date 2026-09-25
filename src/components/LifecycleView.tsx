@@ -145,11 +145,11 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
     <div className="space-y-4">
       
       {/* Tab Switcher: Onboarding vs Offboarding */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-              <UserCheck className="w-4 h-4 text-amber-600" /> IT Lifecycle & Operations Protocols
+              <UserCheck className="w-4 h-4 text-blue-600" /> IT Lifecycle & Operations Protocols
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Standard operating procedures (SOP) for hospitality staff provisioning and secure departure audits.
@@ -161,7 +161,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
               onClick={() => setActiveSubTab('onboarding')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors ${
                 activeSubTab === 'onboarding'
-                  ? 'bg-amber-600 text-white shadow-2xs'
+                  ? 'bg-blue-600 text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -172,7 +172,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
               onClick={() => setActiveSubTab('offboarding')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors ${
                 activeSubTab === 'offboarding'
-                  ? 'bg-amber-600 text-white shadow-2xs'
+                  ? 'bg-blue-600 text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -187,7 +187,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
       {activeSubTab === 'onboarding' && (
         <div className="space-y-4">
           {onboardingMembers.length === 0 ? (
-            <div className="bg-white border border-slate-200 rounded-xl p-12 text-center text-slate-500 shadow-2xs">
+            <div className="bg-white border border-slate-200 rounded-xl p-12 text-center text-slate-500 shadow-sm">
               <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto mb-3" />
               <h3 className="text-base font-bold text-slate-900">Onboarding Queue Clear</h3>
               <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
@@ -201,14 +201,14 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
               const progressPct = Math.round((completedCount / tasks.length) * 100);
 
               return (
-                <div key={member.id} className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs space-y-4">
+                <div key={member.id} className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
                   
                   {/* Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                        <span className="text-xs font-bold uppercase text-amber-700">Onboarding in progress</span>
+                        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                        <span className="text-xs font-bold uppercase text-blue-700">Onboarding in progress</span>
                         <span className="text-slate-300">·</span>
                         <span className="text-xs text-slate-500">{member.propertyOrLocation}</span>
                       </div>
@@ -223,12 +223,12 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
                     <div className="flex items-center gap-3">
                       <div className="text-right">
                         <div className="text-xs text-slate-500 font-medium">Provisioning Readiness</div>
-                        <div className="text-sm font-bold text-amber-800 font-mono">{progressPct}% Complete</div>
+                        <div className="text-sm font-bold text-blue-800 font-mono">{progressPct}% Complete</div>
                       </div>
 
                       <button
                         onClick={() => handleCompleteOnboarding(member)}
-                        className="px-3.5 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-2xs transition-colors flex items-center gap-1.5"
+                        className="px-3.5 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-colors flex items-center gap-1.5"
                       >
                         <CheckCircle2 className="w-4 h-4" />
                         <span>Sign Off as Active</span>
@@ -283,7 +283,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
         <div className="space-y-4">
           
           {/* Quick Trigger Bar */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
               <ShieldAlert className="w-3.5 h-3.5 text-rose-600" /> Initiate Personnel Departure / Offboarding
             </h3>
@@ -294,7 +294,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               <select
                 id="offboard-select"
-                className="px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-amber-500"
+                className="px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/40"
                 defaultValue=""
               >
                 <option value="" disabled>Select active staff to offboard...</option>
@@ -322,7 +322,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
           </div>
 
           {/* Offboarded Records */}
-          <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+          <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-slate-900 text-xs uppercase tracking-wider">
@@ -359,7 +359,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
                         </span>
                         <button
                           onClick={() => onSelectMember(m)}
-                          className="px-2.5 py-1 text-xs text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 rounded border border-slate-200 shadow-2xs"
+                          className="px-2.5 py-1 text-xs text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 rounded border border-slate-200 shadow-sm"
                         >
                           View Record
                         </button>

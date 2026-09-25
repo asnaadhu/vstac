@@ -151,7 +151,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-200 bg-slate-50/80 flex items-center justify-between">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700">
               {member ? 'Edit Personnel Record' : 'Provision New Personnel Record'}
             </span>
             <h2 className="text-lg font-bold text-slate-900">
@@ -162,14 +162,14 @@ export const MemberModal: React.FC<MemberModalProps> = ({
           <div className="flex items-center gap-3">
             {/* Quick Role Template Selector */}
             <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-600">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               <span>Apply Template:</span>
               <select
                 onChange={(e) => {
                   if (e.target.value) handleApplyPreset(e.target.value);
                   e.target.value = '';
                 }}
-                className="px-2 py-1 text-xs bg-white border border-slate-300 rounded text-slate-800 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="px-2 py-1 text-xs bg-white border border-slate-300 rounded text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 defaultValue=""
               >
                 <option value="" disabled>Select hospitality role...</option>
@@ -201,11 +201,11 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                     isActive
-                      ? 'bg-amber-50 text-amber-800 font-bold border border-amber-200'
+                      ? 'bg-blue-50 text-blue-800 font-bold border border-blue-200'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-blue-700' : 'text-slate-400'}`} />
                   <span>{tab.label}</span>
                 </button>
               );
@@ -224,7 +224,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                 {/* Employee Name */}
                 <div>
                   <label className="block text-slate-700 font-semibold mb-1">
-                    Employee Name <span className="text-amber-600">*</span>
+                    Employee Name <span className="text-blue-600">*</span>
                   </label>
                   <input
                     type="text"
@@ -232,7 +232,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                     value={formData.employeeName}
                     onChange={(e) => setFormData({ ...formData, employeeName: e.target.value })}
                     placeholder="e.g. Aishath Mariyam"
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500"
                   />
                   {errors.employeeName && <p className="text-rose-600 text-[11px] mt-1">{errors.employeeName}</p>}
                 </div>
@@ -247,19 +247,19 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                     value={formData.jobTitle}
                     onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
                     placeholder="e.g. Assistant Front Office Manager"
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500"
                   />
                 </div>
 
                 {/* Property / Location */}
                 <div>
                   <label className="block text-slate-700 font-semibold mb-1">
-                    Property or Location <span className="text-amber-600">*</span>
+                    Property or Location <span className="text-blue-600">*</span>
                   </label>
                   <select
                     value={formData.propertyOrLocation}
                     onChange={(e) => setFormData({ ...formData, propertyOrLocation: e.target.value })}
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500"
                   >
                     {PROPERTY_OPTIONS.map(prop => (
                       <option key={prop} value={prop}>{prop}</option>
@@ -275,7 +275,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                   <select
                     value={formData.department}
                     onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500"
                   >
                     {DEPARTMENT_OPTIONS.map(dept => (
                       <option key={dept} value={dept}>{dept}</option>
@@ -291,7 +291,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as MemberStatus })}
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500"
                   >
                     <option value="Active">Active</option>
                     <option value="Onboarding">Onboarding</option>
@@ -312,7 +312,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                   value={formData.generalRemarks}
                   onChange={(e) => setFormData({ ...formData, generalRemarks: e.target.value })}
                   placeholder="Duty manager rotation, special SLAs, equipment assignment notes..."
-                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500"
                 />
               </div>
             </div>
@@ -336,7 +336,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       email: { ...formData.email, address: e.target.value }
                     })}
                     placeholder="staff_name@avanihotels.com"
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                   />
                 </div>
 
@@ -351,7 +351,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       ...formData,
                       email: { ...formData.email, licenseType: e.target.value as M365LicenseType }
                     })}
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   >
                     <option value="M365 E5">M365 E5 (Enterprise Advanced Security)</option>
                     <option value="M365 E3">M365 E3 (Standard Enterprise)</option>
@@ -373,7 +373,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       ...formData,
                       email: { ...formData.email, leadersDL: e.target.checked }
                     })}
-                    className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                    className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                   />
                   <div>
                     <span className="font-semibold text-slate-900 block">Leaders DL</span>
@@ -389,7 +389,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       ...formData,
                       email: { ...formData.email, dhDL: e.target.checked }
                     })}
-                    className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                    className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                   />
                   <div>
                     <span className="font-semibold text-slate-900 block">DH DL</span>
@@ -405,7 +405,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       ...formData,
                       email: { ...formData.email, functionalAccountMfa: e.target.checked }
                     })}
-                    className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                    className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                   />
                   <div>
                     <span className="font-semibold text-slate-900 block">Functional MFA</span>
@@ -427,7 +427,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                     email: { ...formData.email, remarks: e.target.value }
                   })}
                   placeholder="Delegated access to fares@avanihotels.com, mailbox forwarding..."
-                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
               </div>
             </div>
@@ -557,11 +557,11 @@ export const MemberModal: React.FC<MemberModalProps> = ({
               <div className="space-y-5">
                 
                 {/* 1. Fleet Inventory Assignment Selector Header */}
-                <div className="p-4 bg-amber-50/70 border border-amber-200/90 rounded-xl space-y-3">
+                <div className="p-4 bg-blue-50/70 border border-blue-200/90 rounded-xl space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                      <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
-                        <Box className="w-4 h-4 text-amber-700" />
+                      <h4 className="text-xs font-bold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
+                        <Box className="w-4 h-4 text-blue-700" />
                         Hardware & Fleet Inventory Assignment
                       </h4>
                       <p className="text-[11px] text-slate-600 mt-0.5">
@@ -573,7 +573,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       <button
                         type="button"
                         onClick={() => setIsQuickAddOpen(!isQuickAddOpen)}
-                        className="px-2.5 py-1 text-xs font-medium bg-white hover:bg-slate-50 border border-amber-300 text-amber-800 rounded-lg shadow-2xs transition-colors flex items-center gap-1"
+                        className="px-2.5 py-1 text-xs font-medium bg-white hover:bg-slate-50 border border-blue-300 text-blue-800 rounded-lg shadow-sm transition-colors flex items-center gap-1"
                       >
                         <Plus className="w-3.5 h-3.5" />
                         <span>Register New Device</span>
@@ -583,10 +583,10 @@ export const MemberModal: React.FC<MemberModalProps> = ({
 
                   {/* Quick Register New Device Form (Collapsible) */}
                   {isQuickAddOpen && (
-                    <div className="p-3.5 bg-white border border-amber-300 rounded-lg shadow-xs space-y-3">
+                    <div className="p-3.5 bg-white border border-blue-300 rounded-lg shadow-xs space-y-3">
                       <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                         <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                          <HardDrive className="w-3.5 h-3.5 text-amber-600" />
+                          <HardDrive className="w-3.5 h-3.5 text-blue-600" />
                           Add New Device to Fleet & Assign to {formData.employeeName || 'Member'}
                         </span>
                         <button
@@ -604,7 +604,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           <select
                             value={quickCategory}
                             onChange={(e) => setQuickCategory(e.target.value as DeviceCategory)}
-                            className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-slate-800 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                            className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                           >
                             <option value="Laptop">Laptop</option>
                             <option value="Desktop">Desktop / Tiny</option>
@@ -622,7 +622,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                             value={quickModel}
                             onChange={(e) => setQuickModel(e.target.value)}
                             placeholder="e.g. Lenovo ThinkPad T14s"
-                            className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                            className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                           />
                         </div>
 
@@ -633,7 +633,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                             value={quickSerial}
                             onChange={(e) => setQuickSerial(e.target.value)}
                             placeholder="e.g. PF-VFAR-XXXX"
-                            className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-slate-900 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                            className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-slate-900 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                           />
                         </div>
 
@@ -645,12 +645,12 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                               value={quickTag}
                               onChange={(e) => setQuickTag(e.target.value)}
                               placeholder="Auto-assigned"
-                              className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-amber-800 font-mono font-bold focus:outline-none focus:ring-1 focus:ring-amber-500"
+                              className="w-full px-2 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded text-blue-800 font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                             />
                             <button
                               type="button"
                               onClick={() => setQuickTag(`VFAR-IT-${Math.floor(1000 + Math.random() * 9000)}`)}
-                              className="p-1.5 text-slate-500 hover:text-amber-700 hover:bg-slate-100 rounded text-[10px] font-mono"
+                              className="p-1.5 text-slate-500 hover:text-blue-700 hover:bg-slate-100 rounded text-[10px] font-mono"
                               title="Generate tag"
                             >
                               Tag
@@ -671,7 +671,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           type="button"
                           onClick={handleQuickCreateAndAssign}
                           disabled={!quickModel.trim()}
-                          className="px-3 py-1 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded shadow-xs"
+                          className="px-3 py-1 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded shadow-xs"
                         >
                           Register & Assign
                         </button>
@@ -681,7 +681,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
 
                   {/* Device Status Card or Inventory Dropdown */}
                   {formData.hardware.assetTag || formData.hardware.pcLaptopModel ? (
-                    <div className="p-3.5 bg-white border border-emerald-200 rounded-xl shadow-2xs">
+                    <div className="p-3.5 bg-white border border-emerald-200 rounded-xl shadow-sm">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div className="flex items-start gap-3">
                           <div className="w-10 h-10 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-800 flex items-center justify-center shrink-0">
@@ -693,8 +693,8 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                                 {formData.hardware.pcLaptopModel || 'Assigned Fleet Device'}
                               </span>
                               {formData.hardware.assetTag && (
-                                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1">
-                                  <QrCode className="w-3 h-3 text-amber-700" />
+                                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-100 text-blue-900 border border-blue-300 flex items-center gap-1">
+                                  <QrCode className="w-3 h-3 text-blue-700" />
                                   {formData.hardware.assetTag}
                                 </span>
                               )}
@@ -720,10 +720,10 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                             <button
                               type="button"
                               onClick={() => setViewingQRItem(matchedItem)}
-                              className="px-2.5 py-1.5 text-xs font-medium text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-300 rounded-lg transition-colors flex items-center gap-1 shadow-2xs"
+                              className="px-2.5 py-1.5 text-xs font-medium text-blue-800 bg-blue-50 hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors flex items-center gap-1 shadow-sm"
                               title="View QR Code sticker & print physical label"
                             >
-                              <QrCode className="w-3.5 h-3.5 text-amber-700" />
+                              <QrCode className="w-3.5 h-3.5 text-blue-700" />
                               <span>View QR Label</span>
                             </button>
                           )}
@@ -749,7 +749,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           onChange={(e) => {
                             if (e.target.value) handleSelectHardware(e.target.value);
                           }}
-                          className="flex-1 px-2.5 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                          className="flex-1 px-2.5 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                         >
                           <option value="">-- Choose from available IT stock ({availableDevices.filter(d => d.status === 'Available').length} devices) --</option>
                           {availableDevices.filter(d => d.status === 'Available').map(item => (
@@ -769,7 +769,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       <select
                         value={formData.hardware.hardwareId || ''}
                         onChange={(e) => handleSelectHardware(e.target.value)}
-                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                       >
                         <option value="">-- No device assigned (or choose from stock below) --</option>
                         {availableDevices.map(item => (
@@ -795,7 +795,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                     <button
                       type="button"
                       onClick={handleGenerateTag}
-                      className="text-xs text-amber-700 hover:text-amber-800 font-medium flex items-center gap-1"
+                      className="text-xs text-blue-700 hover:text-blue-800 font-medium flex items-center gap-1"
                     >
                       <QrCode className="w-3.5 h-3.5" />
                       <span>Auto-Generate VFAR Tag</span>
@@ -817,7 +817,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           hardware: { ...formData.hardware, pcLaptopModel: e.target.value }
                         })}
                         placeholder="e.g. Lenovo ThinkPad T14s Gen 4"
-                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                       />
                     </div>
 
@@ -834,7 +834,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           hardware: { ...formData.hardware, serialNumber: e.target.value }
                         })}
                         placeholder="e.g. PF-VFAR-XXXX"
-                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                       />
                     </div>
 
@@ -852,7 +852,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                             hardware: { ...formData.hardware, assetTag: e.target.value }
                           })}
                           placeholder="e.g. VFAR-IT-0104"
-                          className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-amber-800 font-mono font-bold focus:outline-none focus:ring-1 focus:ring-amber-500"
+                          className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-blue-800 font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                         />
                       </div>
                     </div>
@@ -872,7 +872,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                         hardware: { ...formData.hardware, remarks: e.target.value }
                       })}
                       placeholder="Includes Lenovo USB-C dock, dual 27-inch Dell monitors, keyboard/mouse kit, Kensington lock..."
-                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                     />
                   </div>
                 </div>
@@ -899,7 +899,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       activeDirectory: { ...formData.activeDirectory, username: e.target.value }
                     })}
                     placeholder="e.g. asnaadhu_mo"
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                   />
                 </div>
 
@@ -916,7 +916,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       activeDirectory: { ...formData.activeDirectory, ouGroup: e.target.value }
                     })}
                     placeholder="OU=FrontOffice,OU=AvaniFares,DC=minor,DC=corp"
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono text-[11px]"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono text-[11px]"
                   />
                 </div>
 
@@ -934,7 +934,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                     activeDirectory: { ...formData.activeDirectory, remarks: e.target.value }
                   })}
                   placeholder="G_VFAR_AllStaff, G_VFAR_Excom_Ops..."
-                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
               </div>
 
@@ -987,7 +987,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       vpn: { ...formData.vpn, remarks: e.target.value }
                     })}
                     placeholder="Remote night audit access, restricted subnet..."
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   />
                 </div>
               </div>
@@ -1019,7 +1019,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                       key={sys.key}
                       className={`p-3 rounded-xl border transition-colors ${
                         current.assigned 
-                          ? 'bg-amber-50/50 border-amber-300' 
+                          ? 'bg-blue-50/50 border-blue-300' 
                           : 'bg-slate-50/60 border-slate-200'
                       }`}
                     >
@@ -1035,7 +1035,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                                 [sysKey]: { ...current, assigned: e.target.checked }
                               }
                             })}
-                            className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                            className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                           />
                           <div>
                             <span className="font-bold text-slate-900 block text-xs">{sys.label}</span>
@@ -1055,7 +1055,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                               }
                             })}
                             placeholder="Role / Cashier ID / Privileges..."
-                            className="sm:w-80 px-2.5 py-1 text-xs bg-white border border-slate-300 rounded text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                            className="sm:w-80 px-2.5 py-1 text-xs bg-white border border-slate-300 rounded text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                           />
                         )}
                       </div>
@@ -1085,7 +1085,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           adobeAcrobat: { ...formData.creativeProductivity.adobeAcrobat, assigned: e.target.checked }
                         }
                       })}
-                      className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                      className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                     />
                     <div>
                       <span className="font-semibold text-slate-900 block">Adobe Acrobat Pro</span>
@@ -1104,7 +1104,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           adobeCc: { ...formData.creativeProductivity.adobeCc, assigned: e.target.checked }
                         }
                       })}
-                      className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                      className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                     />
                     <div>
                       <span className="font-semibold text-slate-900 block">Adobe Creative Cloud (All Apps)</span>
@@ -1129,7 +1129,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           visionline: { ...formData.security.visionline, assigned: e.target.checked }
                         }
                       })}
-                      className="rounded border-slate-300 bg-white text-amber-600 focus:ring-amber-500"
+                      className="rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
                     />
                     <div>
                       <span className="font-semibold text-slate-900 block">Visionline RFID Door Lock Encoder</span>
@@ -1151,7 +1151,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                           }
                         })}
                         placeholder="Master level 2, Housekeeping Section A..."
-                        className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                        className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                       />
                     </div>
                   )}
@@ -1174,7 +1174,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                         telephony: { ...formData.telephony, companyNumber: e.target.value }
                       })}
                       placeholder="+960 664-4100 Ext 8112"
-                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                     />
                   </div>
 
@@ -1190,7 +1190,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                         telephony: { ...formData.telephony, companyPhoneModel: e.target.value }
                       })}
                       placeholder="e.g. Cisco IP 8841 / iPhone 15"
-                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                     />
                   </div>
 
@@ -1206,7 +1206,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                         telephony: { ...formData.telephony, remarks: e.target.value }
                       })}
                       placeholder="Roaming package, speed dial, on-call rotation..."
-                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                     />
                   </div>
                 </div>
@@ -1228,7 +1228,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
             <div className="flex items-center gap-2">
               <button
                 type="submit"
-                className="flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-lg shadow-sm transition-colors"
+                className="flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors"
               >
                 <Save className="w-4 h-4" />
                 <span>{member ? 'Save Changes' : 'Create Record'}</span>
