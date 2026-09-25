@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
-import { 
-  DollarSign, 
-  Layers, 
-  Server, 
-  ShieldCheck, 
-  Laptop, 
-  Users, 
-  Building2, 
-  CheckCircle2, 
-  AlertTriangle, 
-  Wifi, 
-  KeyRound, 
-  ArrowRight, 
-  TrendingUp, 
-  FileSpreadsheet, 
-  QrCode, 
-  Shield, 
-  Clock, 
-  Sparkles, 
-  ExternalLink 
+import React from 'react';
+import {
+  DollarSign,
+  Layers,
+  Server,
+  ShieldCheck,
+  Users,
+  Building2,
+  CheckCircle2,
+  AlertTriangle,
+  ArrowRight,
+  ExternalLink,
+  Shield,
 } from 'lucide-react';
 import { TeamMemberRecord, AuditLogEntry, ActiveTab } from '../types';
 import { DEPARTMENT_OPTIONS } from '../data/initialData';
@@ -40,7 +32,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const onboardingMembers = members.filter(m => m.status === 'Onboarding');
   const offboardedMembers = members.filter(m => m.status === 'Offboarded');
 
-  // M365 Counts
   const e5Count = activeMembers.filter(m => m.email.licenseType === 'M365 E5').length;
   const e3Count = activeMembers.filter(m => m.email.licenseType === 'M365 E3').length;
   const f3Count = activeMembers.filter(m => m.email.licenseType === 'M365 F3').length;
@@ -50,7 +41,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const monthlySaaS = (e5Count * 57) + (e3Count * 36) + (f3Count * 8) + (exchangeCount * 4);
   const annualSaaS = monthlySaaS * 12;
 
-  // Hospitality Systems
   const operaCount = activeMembers.filter(m => m.systems.operaCloud.assigned).length;
   const simphonyCount = activeMembers.filter(m => m.systems.microsSimphony.assigned).length;
   const oracleCount = activeMembers.filter(m => m.systems.oracleFusion.assigned).length;
@@ -58,30 +48,24 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const msgBoxCount = activeMembers.filter(m => m.systems.messageBox.assigned).length;
   const tableCheckCount = activeMembers.filter(m => m.systems.tableCheck.assigned).length;
   const minorAppCount = activeMembers.filter(m => m.systems.minorHotelsApp.assigned).length;
+  const visionlineCount = activeMembers.filter(m => m.security.visionline.assigned).length;
 
-  // Hardware
   const deployedHardware = members.filter(m => Boolean(m.hardware.pcLaptopModel) && m.status !== 'Offboarded');
   const taggedHardware = deployedHardware.filter(m => Boolean(m.hardware.assetTag));
   const untaggedHardware = deployedHardware.filter(m => !m.hardware.assetTag);
-  const tagCompliancePct = deployedHardware.length > 0 
-    ? Math.round((taggedHardware.length / deployedHardware.length) * 100) 
+  const tagCompliancePct = deployedHardware.length > 0
+    ? Math.round((taggedHardware.length / deployedHardware.length) * 100)
     : 100;
 
-  // Security & Remote
   const vpnCount = activeMembers.filter(m => m.vpn.vfarLocalVpn || m.vpn.minorVpn).length;
-  const vfarVpnOnlyCount = activeMembers.filter(m => m.vpn.vfarLocalVpn).length;
-  const visionlineCount = activeMembers.filter(m => m.security.visionline.assigned).length;
-  const leadersDLCount = activeMembers.filter(m => m.email.leadersDL).length;
-  const mfaEnforcedCount = activeMembers.filter(m => m.email.functionalAccountMfa).length;
 
-  // Avani+ Fares Departmental Breakdown
   const departmentStats = DEPARTMENT_OPTIONS.map(dept => {
     const deptMembers = members.filter(m => m.department === dept && m.status === 'Active');
     const deptOpera = deptMembers.filter(m => m.systems.operaCloud.assigned).length;
     const deptSimphony = deptMembers.filter(m => m.systems.microsSimphony.assigned).length;
     const deptM365 = deptMembers.filter(m => m.email.licenseType !== 'None').length;
-    const deptTagged = deptMembers.filter(m => Boolean(m.hardware.assetTag)).length;
     const deptVpn = deptMembers.filter(m => m.vpn.vfarLocalVpn).length;
+    const deptTagged = deptMembers.filter(m => Boolean(m.hardware.assetTag)).length;
     return {
       department: dept,
       totalActive: deptMembers.length,
@@ -94,387 +78,231 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   }).filter(d => d.totalActive > 0);
 
   return (
-    <div className="space-y-6">
-      
-      {/* Executive Header Banner */}
-      <div className="bg-gradient-to-r from-blue-50/90 via-white to-blue-50/50 border border-blue-200/90 rounded-2xl p-5 sm:p-6 shadow-sm">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white flex items-center justify-center font-bold text-base shrink-0 shadow-sm ring-1 ring-blue-500/40">
-              VFAR
-            </div>
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-800 bg-blue-100/70 px-2 py-0.5 rounded border border-blue-300">
-                  Avani+ Fares Maldives Resort
-                </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  On-Island IT Active
-                </span>
-                <span className="text-[10px] text-slate-500 font-medium">
-                  Baa Atoll UNESCO Biosphere Reserve
-                </span>
-              </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-                IT Asset, Access & License Management
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
-                Dedicated resort IT tracker for Avani+ Fares Maldives. Managing on-island systems (Opera Cloud, Micros Simphony, Zenoti, Visionline), Microsoft 365 licensing, and VFAR hardware inventory.
-              </p>
-            </div>
-          </div>
+    <div className="space-y-8">
 
-          <div className="flex items-center gap-3">
-            <div className="text-right hidden sm:block">
-              <div className="text-xs font-bold text-slate-900 font-mono">+960 660-8888</div>
-              <div className="text-[10px] text-slate-500 font-mono">Gateway: vfarLocalVpn</div>
-            </div>
-            <button
-              onClick={() => onNavigateTab('directory')}
-              className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-colors shadow-sm"
-            >
-              <span>View Roster</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
+      {/* Page Title */}
+      <div>
+        <h1 className="text-xl font-bold text-slate-900">IT Asset, Access & License Management</h1>
+        <p className="text-sm text-slate-500 mt-1">
+          Avani+ Fares Maldives Resort · Baa Atoll UNESCO Biosphere Reserve
+        </p>
       </div>
 
-      {/* Top 4 KPI Metrics Scorecards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        
-        {/* KPI 1: Workforce Status */}
-        <div 
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div
           onClick={() => onNavigateTab('directory')}
-          className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-blue-400 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-blue-400 transition-all cursor-pointer"
         >
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-blue-600" /> Active Personnel
-            </span>
-            <span className="text-[11px] text-slate-400 font-mono group-hover:text-blue-700 transition-colors">
-              Directory &rarr;
-            </span>
+          <div className="flex items-center gap-2 text-slate-500 mb-3">
+            <Users className="w-4 h-4 text-blue-600" />
+            <span className="text-sm font-medium">Active Personnel</span>
           </div>
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="text-3xl font-bold text-slate-900 font-mono">{activeMembers.length}</span>
-            <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span> Online
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-slate-500 pt-2 border-t border-slate-100 text-[11px]">
-            <span className="text-blue-800 font-medium">{onboardingMembers.length} Onboarding</span>
+          <div className="text-3xl font-bold text-slate-900">{activeMembers.length}</div>
+          <div className="flex items-center gap-3 mt-3 text-sm text-slate-500">
+            <span>{onboardingMembers.length} onboarding</span>
             <span className="text-slate-300">·</span>
-            <span>{offboardedMembers.length} Offboarded</span>
+            <span>{offboardedMembers.length} offboarded</span>
           </div>
         </div>
 
-        {/* KPI 2: M365 Monthly SaaS Run-rate */}
-        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <DollarSign className="w-3.5 h-3.5 text-emerald-600" /> M365 SaaS Run-rate
-            </span>
-            <span className="text-[11px] text-emerald-700 font-mono font-semibold">
-              ${annualSaaS.toLocaleString()}/yr
-            </span>
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+          <div className="flex items-center gap-2 text-slate-500 mb-3">
+            <DollarSign className="w-4 h-4 text-emerald-600" />
+            <span className="text-sm font-medium">M365 Monthly Cost</span>
           </div>
-          <div className="flex items-baseline gap-1 mb-2">
-            <span className="text-3xl font-bold text-slate-900 font-mono">
-              ${monthlySaaS.toLocaleString()}
-            </span>
-            <span className="text-xs text-slate-500 font-medium">/ month</span>
-          </div>
-          <div className="flex items-center gap-3 text-xs text-slate-500 pt-2 border-t border-slate-100 font-mono text-[11px]">
-            <span>E5: <strong>{e5Count}</strong></span>
+          <div className="text-3xl font-bold text-slate-900">${monthlySaaS.toLocaleString()}</div>
+          <div className="flex items-center gap-3 mt-3 text-sm text-slate-500 font-mono">
+            <span>E5: {e5Count}</span>
             <span className="text-slate-300">·</span>
-            <span>E3: <strong>{e3Count}</strong></span>
+            <span>E3: {e3Count}</span>
             <span className="text-slate-300">·</span>
-            <span>F3: <strong>{f3Count}</strong></span>
+            <span>F3: {f3Count}</span>
           </div>
         </div>
 
-        {/* KPI 3: Hospitality PMS Footprint */}
-        <div 
+        <div
           onClick={() => onNavigateTab('matrix')}
-          className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-sky-400 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-sky-400 transition-all cursor-pointer"
         >
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <Server className="w-3.5 h-3.5 text-sky-600" /> Opera Cloud Seats
-            </span>
-            <span className="text-[11px] text-slate-400 group-hover:text-sky-700 transition-colors">
-              Matrix &rarr;
-            </span>
+          <div className="flex items-center gap-2 text-slate-500 mb-3">
+            <Server className="w-4 h-4 text-sky-600" />
+            <span className="text-sm font-medium">Opera Cloud Seats</span>
           </div>
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="text-3xl font-bold text-slate-900 font-mono">{operaCount}</span>
-            <span className="text-xs text-slate-500">PMS Operators</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-slate-500 pt-2 border-t border-slate-100 text-[11px]">
-            <span>Simphony: <strong className="text-slate-800 font-mono">{simphonyCount}</strong></span>
+          <div className="text-3xl font-bold text-slate-900">{operaCount}</div>
+          <div className="flex items-center gap-3 mt-3 text-sm text-slate-500">
+            <span>Simphony: {simphonyCount}</span>
             <span className="text-slate-300">·</span>
-            <span>Oracle: <strong className="text-slate-800 font-mono">{oracleCount}</strong></span>
+            <span>Oracle: {oracleCount}</span>
           </div>
         </div>
 
-        {/* KPI 4: Asset Tagging Health */}
-        <div 
+        <div
           onClick={() => onNavigateTab('hardware')}
-          className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-blue-400 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-blue-400 transition-all cursor-pointer"
         >
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <span className="font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Asset Tag Coverage
-            </span>
-            <span className="text-[11px] text-slate-400 group-hover:text-blue-700 transition-colors">
-              Fleet &rarr;
-            </span>
+          <div className="flex items-center gap-2 text-slate-500 mb-3">
+            <ShieldCheck className="w-4 h-4 text-blue-600" />
+            <span className="text-sm font-medium">Asset Tag Coverage</span>
           </div>
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="text-3xl font-bold text-slate-900 font-mono">{tagCompliancePct}%</span>
-            <span className="text-xs text-slate-500">{taggedHardware.length}/{deployedHardware.length}</span>
-          </div>
-          <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-100 text-[11px]">
+          <div className="text-3xl font-bold text-slate-900">{tagCompliancePct}%</div>
+          <div className="flex items-center justify-between mt-3 text-sm">
             {untaggedHardware.length > 0 ? (
-              <span className="text-rose-700 font-semibold flex items-center gap-1">
-                <AlertTriangle className="w-3 h-3 text-rose-600" /> {untaggedHardware.length} Untagged Devices
+              <span className="text-rose-600 font-medium flex items-center gap-1">
+                <AlertTriangle className="w-3.5 h-3.5" /> {untaggedHardware.length} untagged
               </span>
             ) : (
-              <span className="text-emerald-700 font-semibold flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-emerald-600" /> 100% Tagged
+              <span className="text-emerald-600 font-medium flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" /> All tagged
               </span>
             )}
-            <span className="text-slate-400">{vpnCount} VPN Active</span>
+            <span className="text-slate-400">{vpnCount} VPN</span>
           </div>
         </div>
-
       </div>
 
-      {/* Untagged Hardware Alert (if any) */}
+      {/* Untagged Alert */}
       {untaggedHardware.length > 0 && (
         <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs font-bold text-rose-950 uppercase tracking-wider">
-                Physical IT Tagging Audit Required ({untaggedHardware.length} Devices Pending Tag)
+              <h4 className="text-sm font-semibold text-rose-900">
+                {untaggedHardware.length} devices need asset tags
               </h4>
-              <p className="text-xs text-rose-800 mt-0.5">
-                The following active staff members are deployed with PCs/laptops missing standard barcode asset tags ({untaggedHardware.map(u => u.employeeName).join(', ')}).
+              <p className="text-sm text-rose-700 mt-0.5">
+                {untaggedHardware.map(u => u.employeeName).join(', ')}
               </p>
             </div>
           </div>
           <button
             onClick={() => onNavigateTab('hardware')}
-            className="shrink-0 px-3.5 py-1.5 text-xs font-semibold text-rose-950 bg-rose-200/80 hover:bg-rose-200 rounded-lg transition-colors flex items-center gap-1.5"
+            className="shrink-0 px-4 py-2 text-sm font-medium text-rose-900 bg-white hover:bg-rose-50 border border-rose-300 rounded-lg transition-colors"
           >
-            <QrCode className="w-3.5 h-3.5" />
-            <span>Open Asset Tagger</span>
+            Open Asset Tagger
           </button>
         </div>
       )}
 
-      {/* SECTION 1: SaaS License Breakdown & Core Hospitality Systems */}
+      {/* License & Systems Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        {/* Microsoft 365 License Allocation Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-sky-600" /> Microsoft 365 License Utilization
-              </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Tier distribution and run-rate cost per seat
-              </p>
+
+        {/* M365 License Card */}
+        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Layers className="w-5 h-5 text-sky-600" />
+              <h3 className="text-base font-semibold text-slate-900">Microsoft 365 Licenses</h3>
             </div>
-            <div className="text-right">
-              <div className="text-xs font-bold text-slate-900 font-mono">
-                ${monthlySaaS.toLocaleString()}/mo
-              </div>
-              <div className="text-[10px] text-slate-400">Total Run-rate</div>
-            </div>
+            <span className="text-sm font-mono text-slate-500">${annualSaaS.toLocaleString()}/yr</span>
           </div>
 
-          {/* Tier Bars */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
-              { 
-                tier: 'M365 E5 (Enterprise Advanced Security & Voice)', 
-                count: e5Count, 
-                unitCost: '$57/seat',
-                totalCost: `$${(e5Count * 57).toLocaleString()}/mo`,
-                color: 'bg-sky-600' 
-              },
-              { 
-                tier: 'M365 E3 (Enterprise Productivity & Compliance)', 
-                count: e3Count, 
-                unitCost: '$36/seat',
-                totalCost: `$${(e3Count * 36).toLocaleString()}/mo`,
-                color: 'bg-blue-600' 
-              },
-              { 
-                tier: 'M365 F3 (Hospitality Frontline Worker)', 
-                count: f3Count, 
-                unitCost: '$8/seat',
-                totalCost: `$${(f3Count * 8).toLocaleString()}/mo`,
-                color: 'bg-blue-600' 
-              },
-              { 
-                tier: 'Exchange Online (Dedicated Mailbox Only)', 
-                count: exchangeCount, 
-                unitCost: '$4/seat',
-                totalCost: `$${(exchangeCount * 4).toLocaleString()}/mo`,
-                color: 'bg-emerald-600' 
-              },
-              { 
-                tier: 'No License Assigned (De-provisioned / Shared)', 
-                count: noneCount, 
-                unitCost: '$0',
-                totalCost: '$0',
-                color: 'bg-slate-300' 
-              },
+              { tier: 'M365 E5', count: e5Count, cost: e5Count * 57, color: 'bg-sky-600' },
+              { tier: 'M365 E3', count: e3Count, cost: e3Count * 36, color: 'bg-blue-600' },
+              { tier: 'M365 F3', count: f3Count, cost: f3Count * 8, color: 'bg-blue-500' },
+              { tier: 'Exchange Online', count: exchangeCount, cost: exchangeCount * 4, color: 'bg-emerald-600' },
+              { tier: 'No License', count: noneCount, cost: 0, color: 'bg-slate-300' },
             ].map(item => {
               const pct = activeMembers.length > 0 ? Math.round((item.count / activeMembers.length) * 100) : 0;
-
               return (
-                <div key={item.tier} className="space-y-1">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-800 font-medium truncate max-w-xs">{item.tier}</span>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <span className="font-mono text-slate-900 font-bold">{item.count} seats</span>
-                      <span className="text-slate-400 text-[11px]">({pct}%)</span>
-                      <span className="text-slate-500 font-mono text-[11px] w-20 text-right">{item.totalCost}</span>
+                <div key={item.tier}>
+                  <div className="flex items-center justify-between text-sm mb-1.5">
+                    <span className="text-slate-700 font-medium">{item.tier}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-bold text-slate-900">{item.count}</span>
+                      <span className="text-slate-400 text-sm">{pct}%</span>
+                      {item.cost > 0 && <span className="text-slate-500 font-mono text-sm">${item.cost}/mo</span>}
                     </div>
                   </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-                    <div className={`${item.color} h-full rounded-full transition-all duration-500`} style={{ width: `${pct}%` }}></div>
+                  <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div className={`${item.color} h-full rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
                   </div>
                 </div>
               );
             })}
           </div>
-
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Leaders DL Enrollment: <strong className="text-slate-900 font-mono">{leadersDLCount}</strong></span>
-            <span>MFA Security Enforced: <strong className="text-emerald-700 font-mono">{mfaEnforcedCount}</strong></span>
-          </div>
         </div>
 
-        {/* Core Hospitality Systems Footprint Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
-                <Server className="w-4 h-4 text-blue-600" /> Hospitality Platforms & System Adoption
-              </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Property Management, Point-of-Sale, ERP & Guest Service
-              </p>
+        {/* Hospitality Systems Card */}
+        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Server className="w-5 h-5 text-blue-600" />
+              <h3 className="text-base font-semibold text-slate-900">Hospitality Systems</h3>
             </div>
             <button
               onClick={() => onNavigateTab('matrix')}
-              className="text-xs font-semibold text-blue-800 hover:text-blue-950 flex items-center gap-1"
+              className="text-sm font-medium text-blue-700 hover:text-blue-800 flex items-center gap-1"
             >
-              <span>Access Matrix</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              View Matrix <ExternalLink className="w-3.5 h-3.5" />
             </button>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { name: 'Opera Cloud PMS', count: operaCount, category: 'Front Desk & Cashiering', badge: 'PMS' },
-              { name: 'Micros Simphony', count: simphonyCount, category: 'F&B POS Revenue Centers', badge: 'POS' },
-              { name: 'Oracle Fusion ERP', count: oracleCount, category: 'Financials & Supply Chain', badge: 'ERP' },
-              { name: 'Zenoti Wellness', count: zenotiCount, category: 'Spa Rostering & Retail', badge: 'Spa' },
-              { name: 'MessageBox Orders', count: msgBoxCount, category: 'Guest Service & Runners', badge: 'Ops' },
-              { name: 'TableCheck Dining', count: tableCheckCount, category: 'Restaurant Reservations', badge: 'F&B' },
-              { name: 'Minor Hotels App', count: minorAppCount, category: 'Discovery Loyalty Mobile', badge: 'Guest' },
-              { name: 'Visionline Door Locks', count: visionlineCount, category: 'RFID Keycard Encoders', badge: 'Access' },
+              { name: 'Opera Cloud', count: operaCount, badge: 'PMS' },
+              { name: 'Micros Simphony', count: simphonyCount, badge: 'POS' },
+              { name: 'Oracle Fusion', count: oracleCount, badge: 'ERP' },
+              { name: 'Zenoti Wellness', count: zenotiCount, badge: 'Spa' },
+              { name: 'MessageBox', count: msgBoxCount, badge: 'Ops' },
+              { name: 'TableCheck', count: tableCheckCount, badge: 'F&B' },
+              { name: 'Minor Hotels App', count: minorAppCount, badge: 'Guest' },
+              { name: 'Visionline', count: visionlineCount, badge: 'Access' },
             ].map(sys => (
-              <div 
-                key={sys.name} 
+              <div
+                key={sys.name}
                 onClick={() => onNavigateTab('matrix')}
-                className="p-3 bg-slate-50/70 hover:bg-slate-100/70 rounded-xl border border-slate-200 transition-colors cursor-pointer group"
+                className="p-3.5 bg-slate-50 hover:bg-slate-100 rounded-lg border border-slate-200 transition-colors cursor-pointer"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white text-slate-600 font-semibold border border-slate-200">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-white text-slate-600 font-semibold border border-slate-200">
                     {sys.badge}
                   </span>
-                  <span className="text-lg font-bold text-slate-900 font-mono group-hover:text-blue-700 transition-colors">
-                    {sys.count}
-                  </span>
+                  <span className="text-xl font-bold text-slate-900">{sys.count}</span>
                 </div>
-                <div className="text-xs font-bold text-slate-800 mt-1">{sys.name}</div>
-                <div className="text-[10px] text-slate-500 mt-0.5 truncate">{sys.category}</div>
+                <div className="text-sm font-medium text-slate-700">{sys.name}</div>
               </div>
             ))}
           </div>
-
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Minor Corporate VPN: <strong className="text-sky-700 font-mono">{activeMembers.filter(m => m.vpn.minorVpn).length}</strong></span>
-            <span>VFAR Island VPN: <strong className="text-sky-700 font-mono">{activeMembers.filter(m => m.vpn.vfarLocalVpn).length}</strong></span>
-          </div>
         </div>
-
       </div>
 
-      {/* SECTION 2: Avani+ Fares Departmental IT & Systems Allocation Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-emerald-600" /> Avani+ Fares — Departmental IT & Systems Allocation
-            </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Active resort personnel, PMS & POS seats, M365 accounts, on-island VPN, and VFAR hardware tag compliance
-            </p>
+      {/* Department Table */}
+      <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-5 h-5 text-emerald-600" />
+            <h3 className="text-base font-semibold text-slate-900">Departmental IT Allocation</h3>
           </div>
-          <span className="text-xs text-slate-500 font-mono">
-            {departmentStats.length} Resort Departments
-          </span>
+          <span className="text-sm text-slate-400">{departmentStats.length} departments</span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-700">
-            <thead className="bg-slate-50/80 text-slate-600 border-b border-slate-200 select-none">
+          <table className="w-full text-left text-sm">
+            <thead className="border-b border-slate-200 text-slate-500">
               <tr>
-                <th className="py-2.5 px-3.5 font-semibold">Resort Department</th>
-                <th className="py-2.5 px-3.5 font-semibold text-center">Active Staff</th>
-                <th className="py-2.5 px-3.5 font-semibold text-center">Opera Cloud</th>
-                <th className="py-2.5 px-3.5 font-semibold text-center">Simphony POS</th>
-                <th className="py-2.5 px-3.5 font-semibold text-center">M365 Accounts</th>
-                <th className="py-2.5 px-3.5 font-semibold text-center">VFAR VPN</th>
-                <th className="py-2.5 px-3.5 font-semibold text-center">Hardware Tagged</th>
+                <th className="py-3 px-4 font-medium">Department</th>
+                <th className="py-3 px-4 font-medium text-center">Staff</th>
+                <th className="py-3 px-4 font-medium text-center">Opera</th>
+                <th className="py-3 px-4 font-medium text-center">Simphony</th>
+                <th className="py-3 px-4 font-medium text-center">M365</th>
+                <th className="py-3 px-4 font-medium text-center">VPN</th>
+                <th className="py-3 px-4 font-medium text-center">Tagged</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {departmentStats.map(stat => (
-                <tr key={stat.department} className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-2.5 px-3.5">
-                    <div className="font-semibold text-slate-900">{stat.department}</div>
-                  </td>
-                  <td className="py-2.5 px-3.5 text-center font-mono font-bold text-slate-800">
-                    {stat.totalActive}
-                  </td>
-                  <td className="py-2.5 px-3.5 text-center font-mono text-sky-700 font-medium">
-                    {stat.operaSeats > 0 ? stat.operaSeats : '—'}
-                  </td>
-                  <td className="py-2.5 px-3.5 text-center font-mono text-emerald-700 font-medium">
-                    {stat.simphonySeats > 0 ? stat.simphonySeats : '—'}
-                  </td>
-                  <td className="py-2.5 px-3.5 text-center font-mono text-blue-700 font-medium">
-                    {stat.m365Assigned}
-                  </td>
-                  <td className="py-2.5 px-3.5 text-center font-mono text-blue-700 font-medium">
-                    {stat.vfarVpnCount > 0 ? stat.vfarVpnCount : '—'}
-                  </td>
-                  <td className="py-2.5 px-3.5 text-center">
-                    <span className={`inline-flex items-center gap-1 font-mono text-xs font-semibold ${
-                      stat.taggedPct === 100 ? 'text-emerald-700' : 'text-blue-700'
-                    }`}>
+                <tr key={stat.department} className="hover:bg-slate-50 transition-colors">
+                  <td className="py-3 px-4 font-medium text-slate-900">{stat.department}</td>
+                  <td className="py-3 px-4 text-center font-mono font-semibold text-slate-800">{stat.totalActive}</td>
+                  <td className="py-3 px-4 text-center font-mono text-sky-700">{stat.operaSeats || '—'}</td>
+                  <td className="py-3 px-4 text-center font-mono text-emerald-700">{stat.simphonySeats || '—'}</td>
+                  <td className="py-3 px-4 text-center font-mono text-blue-700">{stat.m365Assigned}</td>
+                  <td className="py-3 px-4 text-center font-mono text-blue-700">{stat.vfarVpnCount || '—'}</td>
+                  <td className="py-3 px-4 text-center">
+                    <span className={`font-mono font-semibold ${stat.taggedPct === 100 ? 'text-emerald-700' : 'text-blue-700'}`}>
                       {stat.taggedPct}%
                     </span>
                   </td>
@@ -485,101 +313,82 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
       </div>
 
-      {/* SECTION 3: Onboarding Pipeline & Recent Audit Activity Feed */}
+      {/* Onboarding & Audit Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        {/* Onboarding Operations Queue */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-600" /> Pending IT Onboarding Pipeline ({onboardingMembers.length})
-              </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Staff members currently undergoing account and hardware provisioning
-              </p>
+
+        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Users className="w-5 h-5 text-blue-600" />
+              <h3 className="text-base font-semibold text-slate-900">Onboarding Pipeline</h3>
             </div>
             <button
               onClick={() => onNavigateTab('lifecycle')}
-              className="text-xs font-semibold text-blue-800 hover:text-blue-950 flex items-center gap-1"
+              className="text-sm font-medium text-blue-700 hover:text-blue-800 flex items-center gap-1"
             >
-              <span>View Lifecycle</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              View Lifecycle <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
           {onboardingMembers.length === 0 ? (
-            <div className="py-8 text-center text-slate-400">
+            <div className="py-10 text-center">
               <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
-              <p className="text-xs font-medium text-slate-700">All incoming personnel provisioned</p>
+              <p className="text-sm text-slate-600">All personnel provisioned</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {onboardingMembers.map(member => (
-                <div 
+                <div
                   key={member.id}
                   onClick={() => onSelectMember(member)}
-                  className="p-3 bg-slate-50/70 hover:bg-slate-100/70 rounded-xl border border-slate-200 transition-colors cursor-pointer flex items-center justify-between gap-3"
+                  className="p-3.5 bg-slate-50 hover:bg-slate-100 rounded-lg border border-slate-200 transition-colors cursor-pointer flex items-center justify-between gap-3"
                 >
                   <div>
-                    <div className="font-bold text-slate-900 text-xs">{member.employeeName}</div>
-                    <div className="text-[11px] text-slate-500">
-                      {member.jobTitle} · <span className="text-slate-700">{member.department}</span>
-                    </div>
+                    <div className="font-semibold text-slate-900 text-sm">{member.employeeName}</div>
+                    <div className="text-sm text-slate-500">{member.jobTitle} · {member.department}</div>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-900 border border-blue-300">
-                      Provisioning
-                    </span>
-                  </div>
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-100 text-blue-800">
+                    Provisioning
+                  </span>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* Security & Operational Governance Audit Feed */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
-                <Shield className="w-4 h-4 text-emerald-600" /> Recent Security & IT Operations Trail
-              </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Latest credential changes and administrative modifications
-              </p>
+        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-emerald-600" />
+              <h3 className="text-base font-semibold text-slate-900">Recent Activity</h3>
             </div>
             <button
               onClick={() => onNavigateTab('audit')}
-              className="text-xs font-semibold text-blue-800 hover:text-blue-950 flex items-center gap-1"
+              className="text-sm font-medium text-blue-700 hover:text-blue-800 flex items-center gap-1"
             >
-              <span>Full Audit Trail</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              Full Audit <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="space-y-2.5">
-            {auditLogs.slice(0, 4).map(log => (
-              <div key={log.id} className="p-2.5 bg-slate-50/70 rounded-xl border border-slate-200 text-xs space-y-1">
-                <div className="flex items-center justify-between">
+          <div className="space-y-3">
+            {auditLogs.slice(0, 5).map(log => (
+              <div key={log.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded bg-white text-slate-700 border border-slate-200">
+                    <span className="text-xs font-mono font-medium px-1.5 py-0.5 rounded bg-white text-slate-700 border border-slate-200">
                       {log.action}
                     </span>
-                    <strong className="text-slate-900">{log.memberName}</strong>
+                    <span className="text-sm font-semibold text-slate-900">{log.memberName}</span>
                   </div>
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-xs text-slate-400 font-mono">
                     {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-600 line-clamp-1">
-                  {log.details}
-                </p>
+                <p className="text-sm text-slate-600 line-clamp-1">{log.details}</p>
               </div>
             ))}
           </div>
         </div>
-
       </div>
 
     </div>
