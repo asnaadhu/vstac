@@ -17,7 +17,7 @@ import {
   RotateCcw,
   Box
 } from 'lucide-react';
-import { TeamMemberRecord, MemberStatus, M365LicenseType, HardwareItem, DeviceCategory } from '../types';
+import { TeamMemberRecord, MemberStatus, M365LicenseType, HardwareItem, DeviceCategory, MemberHardwareItem } from '../types';
 import { PROPERTY_OPTIONS, DEPARTMENT_OPTIONS } from '../data/initialData';
 import { createBlankMember, ROLE_PRESETS } from '../utils/storage';
 import { HardwareQRModal } from './HardwareQRModal';
@@ -83,10 +83,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({
         ...prev.email,
         ...(preset.email || {})
       },
-      hardware: {
-        ...prev.hardware,
-        ...(preset.hardware || {})
-      },
+      hardware: preset.hardware || prev.hardware,
       systems: {
         ...prev.systems,
         ...(preset.systems || {})
@@ -435,78 +432,44 @@ export const MemberModal: React.FC<MemberModalProps> = ({
 
           {/* TAB 3: Hardware & Fleet Inventory Assignment */}
           {activeTab === 'hardware' && (() => {
-            const currentHardwareId = formData.hardware.hardwareId;
-            const currentAssetTag = formData.hardware.assetTag.trim().toLowerCase();
-            
-            // Find if this member currently matches an inventory item
-            const matchedItem = hardwareInventory.find(h => 
-              (currentHardwareId && h.id === currentHardwareId) ||
-              (currentAssetTag && h.assetTag.toLowerCase() === currentAssetTag) ||
-              (formData.hardware.serialNumber && h.serialNumber && h.serialNumber.toLowerCase() === formData.hardware.serialNumber.toLowerCase())
-            );
-
-            // Devices available in stock (or the device currently assigned to this member)
             const availableDevices = hardwareInventory.filter(h => 
-              h.status === 'Available' || 
-              (matchedItem && h.id === matchedItem.id) ||
-              h.assignedMemberId === formData.id
+              h.status === 'Available' || h.assignedMemberId === formData.id
             );
 
-            const handleSelectHardware = (hwId: string) => {
-              if (!hwId) {
-                // Unassign
-                setFormData(prev => ({
-                  ...prev,
-                  hardware: {
-                    ...prev.hardware,
-                    hardwareId: undefined,
-                    pcLaptopModel: '',
-                    serialNumber: '',
-                    assetTag: ''
-                  }
-                }));
-                return;
-              }
-
-              const item = hardwareInventory.find(h => h.id === hwId);
-              if (item) {
-                setFormData(prev => ({
-                  ...prev,
-                  hardware: {
-                    ...prev.hardware,
-                    hardwareId: item.id,
-                    pcLaptopModel: item.deviceModel,
-                    serialNumber: item.serialNumber,
-                    assetTag: item.assetTag,
-                    remarks: prev.hardware.remarks || item.specifications || `Assigned from VFAR Fleet inventory (${item.deviceCategory})`
-                  }
-                }));
-              }
-            };
-
-            const handleUnassignHardware = () => {
+            const updateHardwareItem = (index: number, patch: Partial<MemberHardwareItem>) => {
               setFormData(prev => ({
                 ...prev,
-                hardware: {
-                  ...prev.hardware,
-                  hardwareId: undefined,
-                  pcLaptopModel: '',
-                  serialNumber: '',
-                  assetTag: '',
-                  remarks: 'Hardware returned to IT stock / unassigned'
-                }
+                hardware: prev.hardware.map((hw, i) => i === index ? { ...hw, ...patch } : hw)
               }));
             };
 
-            const handleGenerateTag = () => {
-              const randomNum = Math.floor(1000 + Math.random() * 9000);
-              const newTag = `VFAR-IT-${randomNum}`;
+            const removeHardwareItem = (index: number) => {
               setFormData(prev => ({
                 ...prev,
-                hardware: {
-                  ...prev.hardware,
-                  assetTag: newTag
-                }
+                hardware: prev.hardware.filter((_, i) => i !== index)
+              }));
+            };
+
+            const addBlankHardware = () => {
+              setFormData(prev => ({
+                ...prev,
+                hardware: [...prev.hardware, { pcLaptopModel: '', serialNumber: '', assetTag: '', remarks: '' }]
+              }));
+            };
+
+            const assignFromInventory = (hwId: string) => {
+              if (!hwId) return;
+              const item = hardwareInventory.find(h => h.id === hwId);
+              if (!item) return;
+              setFormData(prev => ({
+                ...prev,
+                hardware: [...prev.hardware, {
+                  hardwareId: item.id,
+                  pcLaptopModel: item.deviceModel,
+                  serialNumber: item.serialNumber,
+                  assetTag: item.assetTag,
+                  remarks: item.specifications || `Assigned from VFAR Fleet inventory (${item.deviceCategory})`
+                }]
               }));
             };
 
@@ -535,14 +498,13 @@ export const MemberModal: React.FC<MemberModalProps> = ({
 
               setFormData(prev => ({
                 ...prev,
-                hardware: {
-                  ...prev.hardware,
+                hardware: [...prev.hardware, {
                   hardwareId: newItem.id,
                   pcLaptopModel: newItem.deviceModel,
                   serialNumber: newItem.serialNumber,
                   assetTag: newItem.assetTag,
-                  remarks: prev.hardware.remarks || newItem.specifications || 'New fleet device assigned'
-                }
+                  remarks: newItem.specifications || 'New fleet device assigned'
+                }]
               }));
 
               setIsQuickAddOpen(false);
@@ -556,16 +518,16 @@ export const MemberModal: React.FC<MemberModalProps> = ({
             return (
               <div className="space-y-5">
                 
-                {/* 1. Fleet Inventory Assignment Selector Header */}
+                {/* Header with actions */}
                 <div className="p-4 bg-blue-50/70 border border-blue-200/90 rounded-xl space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <h4 className="text-xs font-bold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
                         <Box className="w-4 h-4 text-blue-700" />
-                        Hardware & Fleet Inventory Assignment
+                        Hardware & Fleet Inventory ({formData.hardware.length} device{formData.hardware.length !== 1 ? 's' : ''})
                       </h4>
                       <p className="text-[11px] text-slate-600 mt-0.5">
-                        Assign verified devices directly from the on-island IT inventory stock pool.
+                        Assign multiple devices from IT stock. Not all staff need hardware — assign only what's required.
                       </p>
                     </div>
 
@@ -679,203 +641,163 @@ export const MemberModal: React.FC<MemberModalProps> = ({
                     </div>
                   )}
 
-                  {/* Device Status Card or Inventory Dropdown */}
-                  {formData.hardware.assetTag || formData.hardware.pcLaptopModel ? (
-                    <div className="p-3.5 bg-white border border-emerald-200 rounded-xl shadow-sm">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-800 flex items-center justify-center shrink-0">
-                            <Laptop className="w-5 h-5 text-emerald-700" />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-xs font-bold text-slate-900">
-                                {formData.hardware.pcLaptopModel || 'Assigned Fleet Device'}
-                              </span>
-                              {formData.hardware.assetTag && (
-                                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-100 text-blue-900 border border-blue-300 flex items-center gap-1">
-                                  <QrCode className="w-3 h-3 text-blue-700" />
-                                  {formData.hardware.assetTag}
-                                </span>
-                              )}
-                              <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                                Assigned to Member
-                              </span>
-                            </div>
-
-                            <div className="text-[11px] text-slate-500 font-mono mt-0.5">
-                              S/N: {formData.hardware.serialNumber || 'Pending S/N'}
-                              {matchedItem && ` · Category: ${matchedItem.deviceCategory} · Condition: ${matchedItem.condition}`}
-                            </div>
-                            {matchedItem?.specifications && (
-                              <div className="text-[11px] text-slate-600 mt-1 font-medium">
-                                Specs: {matchedItem.specifications}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2 self-end sm:self-center">
-                          {matchedItem && (
-                            <button
-                              type="button"
-                              onClick={() => setViewingQRItem(matchedItem)}
-                              className="px-2.5 py-1.5 text-xs font-medium text-blue-800 bg-blue-50 hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors flex items-center gap-1 shadow-sm"
-                              title="View QR Code sticker & print physical label"
-                            >
-                              <QrCode className="w-3.5 h-3.5 text-blue-700" />
-                              <span>View QR Label</span>
-                            </button>
-                          )}
-                          <button
-                            type="button"
-                            onClick={handleUnassignHardware}
-                            className="px-2.5 py-1.5 text-xs font-medium text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-lg transition-colors flex items-center gap-1"
-                            title="Unassign this hardware and return device to available IT stock"
-                          >
-                            <RotateCcw className="w-3.5 h-3.5" />
-                            <span>Unassign / Return to Stock</span>
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Direct Switch to another in-stock device */}
-                      <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center gap-2">
-                        <span className="text-[11px] text-slate-500 font-medium whitespace-nowrap">
-                          Switch to another available fleet device:
-                        </span>
-                        <select
-                          value=""
-                          onChange={(e) => {
-                            if (e.target.value) handleSelectHardware(e.target.value);
-                          }}
-                          className="flex-1 px-2.5 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
-                        >
-                          <option value="">-- Choose from available IT stock ({availableDevices.filter(d => d.status === 'Available').length} devices) --</option>
-                          {availableDevices.filter(d => d.status === 'Available').map(item => (
-                            <option key={item.id} value={item.id}>
-                              [{item.assetTag}] {item.deviceModel} ({item.deviceCategory}) — S/N: {item.serialNumber || 'N/A'}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  ) : (
-                    /* Selector for Available Hardware in Stock */
-                    <div className="space-y-2">
-                      <label className="block text-xs font-semibold text-slate-800">
-                        Choose Available Device from IT Stock ({availableDevices.filter(d => d.status === 'Available').length} available)
-                      </label>
-                      <select
-                        value={formData.hardware.hardwareId || ''}
-                        onChange={(e) => handleSelectHardware(e.target.value)}
-                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
-                      >
-                        <option value="">-- No device assigned (or choose from stock below) --</option>
-                        {availableDevices.map(item => (
-                          <option key={item.id} value={item.id}>
-                            [{item.assetTag}] {item.deviceModel} ({item.deviceCategory}) — S/N: {item.serialNumber || 'N/A'} {item.status === 'Available' ? '· [AVAILABLE IN STOCK]' : '· [CURRENTLY ASSIGNED]'}
-                          </option>
-                        ))}
-                      </select>
-                      <p className="text-[11px] text-slate-500">
-                        Selecting a device from stock links the fleet asset tag and specifications to this staff member.
-                      </p>
-                    </div>
-                  )}
+                  {/* Assign from stock dropdown */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <span className="text-[11px] text-slate-500 font-medium whitespace-nowrap">
+                      Assign from IT stock:
+                    </span>
+                    <select
+                      value=""
+                      onChange={(e) => { if (e.target.value) assignFromInventory(e.target.value); }}
+                      className="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
+                    >
+                      <option value="">-- Choose from available stock ({availableDevices.filter(d => d.status === 'Available').length} devices) --</option>
+                      {availableDevices.filter(d => d.status === 'Available').map(item => (
+                        <option key={item.id} value={item.id}>
+                          [{item.assetTag}] {item.deviceModel} ({item.deviceCategory}) — S/N: {item.serialNumber || 'N/A'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
-                {/* 2. Hardware Detail Verification & Adjustments */}
-                <div className="border border-slate-200 rounded-xl p-4 bg-white space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                    <h5 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                      <Laptop className="w-3.5 h-3.5 text-slate-500" />
-                      Hardware Technical Specifications
-                    </h5>
+                {/* List of assigned hardware items */}
+                {formData.hardware.length === 0 ? (
+                  <div className="border border-dashed border-slate-300 rounded-xl p-8 text-center bg-slate-50/50">
+                    <Laptop className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <p className="text-sm font-medium text-slate-700">No hardware assigned</p>
+                    <p className="text-xs text-slate-500 mt-1">Not all staff need hardware. Assign devices from stock above only when required.</p>
                     <button
                       type="button"
-                      onClick={handleGenerateTag}
-                      className="text-xs text-blue-700 hover:text-blue-800 font-medium flex items-center gap-1"
+                      onClick={addBlankHardware}
+                      className="mt-3 px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors flex items-center gap-1 mx-auto"
                     >
-                      <QrCode className="w-3.5 h-3.5" />
-                      <span>Auto-Generate VFAR Tag</span>
+                      <Plus className="w-3.5 h-3.5" />
+                      Add Hardware Manually
                     </button>
                   </div>
+                ) : (
+                  <div className="space-y-3">
+                    {formData.hardware.map((hw, index) => {
+                      const matchedItem = hw.hardwareId 
+                        ? hardwareInventory.find(h => h.id === hw.hardwareId)
+                        : hardwareInventory.find(h => 
+                            h.assetTag.toLowerCase() === hw.assetTag.trim().toLowerCase() && hw.assetTag.trim()
+                          );
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    
-                    {/* Model */}
-                    <div>
-                      <label className="block text-slate-700 font-semibold mb-1 text-xs">
-                        PC / Laptop Model
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.hardware.pcLaptopModel}
-                        onChange={(e) => setFormData({
-                          ...formData,
-                          hardware: { ...formData.hardware, pcLaptopModel: e.target.value }
-                        })}
-                        placeholder="e.g. Lenovo ThinkPad T14s Gen 4"
-                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-                      />
-                    </div>
+                      return (
+                        <div key={index} className="border border-slate-200 rounded-xl p-4 bg-white space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h5 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                              <Laptop className="w-3.5 h-3.5 text-slate-500" />
+                              Device {index + 1}
+                              {matchedItem && (
+                                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 normal-case">
+                                  Fleet Matched
+                                </span>
+                              )}
+                            </h5>
+                            <div className="flex items-center gap-2">
+                              {matchedItem && (
+                                <button
+                                  type="button"
+                                  onClick={() => setViewingQRItem(matchedItem)}
+                                  className="px-2 py-1 text-xs font-medium text-blue-800 bg-blue-50 hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors flex items-center gap-1"
+                                  title="View QR Code sticker"
+                                >
+                                  <QrCode className="w-3.5 h-3.5 text-blue-700" />
+                                  QR
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const newTag = `VFAR-IT-${Math.floor(1000 + Math.random() * 9000)}`;
+                                  updateHardwareItem(index, { assetTag: newTag });
+                                }}
+                                className="px-2 py-1 text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition-colors flex items-center gap-1"
+                                title="Auto-generate asset tag"
+                              >
+                                <QrCode className="w-3.5 h-3.5" />
+                                Tag
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => removeHardwareItem(index)}
+                                className="p-1.5 text-rose-600 hover:text-rose-800 hover:bg-rose-50 rounded-lg transition-colors"
+                                title="Remove this device"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
 
-                    {/* Serial Number */}
-                    <div>
-                      <label className="block text-slate-700 font-semibold mb-1 text-xs">
-                        Serial Number (S/N)
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.hardware.serialNumber}
-                        onChange={(e) => setFormData({
-                          ...formData,
-                          hardware: { ...formData.hardware, serialNumber: e.target.value }
-                        })}
-                        placeholder="e.g. PF-VFAR-XXXX"
-                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
-                      />
-                    </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                              <label className="block text-slate-700 font-semibold mb-1 text-xs">Model</label>
+                              <input
+                                type="text"
+                                value={hw.pcLaptopModel}
+                                onChange={(e) => updateHardwareItem(index, { pcLaptopModel: e.target.value })}
+                                placeholder="e.g. Lenovo ThinkPad T14s Gen 4"
+                                className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-slate-700 font-semibold mb-1 text-xs">Serial Number</label>
+                              <input
+                                type="text"
+                                value={hw.serialNumber}
+                                onChange={(e) => updateHardwareItem(index, { serialNumber: e.target.value })}
+                                placeholder="e.g. PF-VFAR-XXXX"
+                                className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-slate-700 font-semibold mb-1 text-xs">Asset Tag</label>
+                              <input
+                                type="text"
+                                value={hw.assetTag}
+                                onChange={(e) => updateHardwareItem(index, { assetTag: e.target.value })}
+                                placeholder="e.g. VFAR-IT-0104"
+                                className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-blue-800 font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                              />
+                            </div>
+                          </div>
 
-                    {/* Asset Tag */}
-                    <div>
-                      <label className="block text-slate-700 font-semibold mb-1 text-xs">
-                        Asset Tag (VFAR-IT-XXXX)
-                      </label>
-                      <div className="flex items-center gap-1.5">
-                        <input
-                          type="text"
-                          value={formData.hardware.assetTag}
-                          onChange={(e) => setFormData({
-                            ...formData,
-                            hardware: { ...formData.hardware, assetTag: e.target.value }
-                          })}
-                          placeholder="e.g. VFAR-IT-0104"
-                          className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-blue-800 font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-                        />
-                      </div>
-                    </div>
+                          <div>
+                            <label className="block text-slate-700 font-semibold mb-1 text-xs">
+                              Condition, Accessories & Peripherals
+                            </label>
+                            <textarea
+                              rows={2}
+                              value={hw.remarks}
+                              onChange={(e) => updateHardwareItem(index, { remarks: e.target.value })}
+                              placeholder="USB-C dock, dual monitors, Kensington lock..."
+                              className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                            />
+                          </div>
 
+                          {matchedItem?.specifications && (
+                            <div className="text-[11px] text-slate-600 bg-slate-50 rounded-lg p-2 font-medium">
+                              Fleet Specs: {matchedItem.specifications}
+                              {matchedItem.condition && ` · Condition: ${matchedItem.condition}`}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+
+                    <button
+                      type="button"
+                      onClick={addBlankHardware}
+                      className="w-full py-2.5 text-xs font-medium text-blue-700 bg-blue-50/50 hover:bg-blue-50 border border-dashed border-blue-300 rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add Another Device
+                    </button>
                   </div>
-
-                  {/* Hardware Remarks & Accessories */}
-                  <div>
-                    <label className="block text-slate-700 font-semibold mb-1 text-xs">
-                      Hardware Condition, Accessories & Peripherals
-                    </label>
-                    <textarea
-                      rows={2}
-                      value={formData.hardware.remarks}
-                      onChange={(e) => setFormData({
-                        ...formData,
-                        hardware: { ...formData.hardware, remarks: e.target.value }
-                      })}
-                      placeholder="Includes Lenovo USB-C dock, dual 27-inch Dell monitors, keyboard/mouse kit, Kensington lock..."
-                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-                    />
-                  </div>
-                </div>
+                )}
 
               </div>
             );

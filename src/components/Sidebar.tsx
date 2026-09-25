@@ -15,7 +15,7 @@ import {
   Layers,
   HardDrive
 } from 'lucide-react';
-import { ActiveTab, TeamMemberRecord } from '../types';
+import { ActiveTab, TeamMemberRecord, memberHasUntaggedHardware } from '../types';
 
 interface SidebarProps {
   activeTab: ActiveTab;
@@ -40,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const activeMembers = members.filter(m => m.status === 'Active').length;
   const pendingOnboarding = members.filter(m => m.status === 'Onboarding').length;
-  const missingAssetTag = members.filter(m => !m.hardware.assetTag && m.status !== 'Offboarded' && (m.hardware.pcLaptopModel || m.hardware.mobileModel)).length;
+  const missingAssetTag = members.filter(m => memberHasUntaggedHardware(m) && m.status !== 'Offboarded').length;
   const operaSeats = members.filter(m => m.systems.operaCloud.assigned && m.status === 'Active').length;
   const m365Licenses = members.filter(m => m.email.licenseType !== 'None' && m.status === 'Active').length;
 

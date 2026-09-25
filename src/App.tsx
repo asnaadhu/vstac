@@ -5,7 +5,8 @@ import {
   ActiveTab, 
   FilterState, 
   MemberStatus,
-  HardwareItem 
+  HardwareItem,
+  DeviceCategory 
 } from './types';
 import { 
   loadMembers, 
@@ -203,11 +204,11 @@ export default function App() {
   const handleSaveMember = (record: TeamMemberRecord) => {
     const isExisting = members.some(m => m.id === record.id);
     const prevMember = members.find(m => m.id === record.id);
-    const prevHwId = prevMember?.hardware.hardwareId;
-    const prevTag = prevMember?.hardware.assetTag?.trim().toLowerCase();
+    const prevHwIds = prevMember?.hardware.map(h => h.hardwareId).filter(Boolean) as string[];
+    const prevTags = prevMember?.hardware.map(h => h.assetTag?.trim().toLowerCase()).filter(Boolean) as string[];
 
-    const currentHwId = record.hardware.hardwareId;
-    const currentTag = record.hardware.assetTag?.trim().toLowerCase();
+    const currentHwIds = record.hardware.map(h => h.hardwareId).filter(Boolean) as string[];
+    const currentTags = record.hardware.map(h => h.assetTag?.trim().toLowerCase()).filter(Boolean) as string[];
 
     if (isExisting) {
       setMembers(prev => prev.map(m => m.id === record.id ? record : m));
@@ -217,18 +218,17 @@ export default function App() {
       addAuditLog(record.id, record.employeeName, 'Created', `Provisioned new member record with status "${record.status}".`);
     }
 
-    // Keep hardware inventory in 100% two-way sync with Fleet
+    // Keep hardware inventory in sync with Fleet
     setHardwareInventory(prev => {
-      // 1. Release any equipment previously assigned to this member that was unassigned, changed, or if offboarded
+      // 1. Release any equipment previously assigned to this member that is no longer assigned
       let updated = prev.map(h => {
         const wasAssignedToThisMember = h.assignedMemberId === record.id || 
-                                       (prevHwId && h.id === prevHwId) || 
-                                       (prevTag && h.assetTag.toLowerCase() === prevTag);
+                                       (prevHwIds.includes(h.id)) || 
+                                       (prevTags.includes(h.assetTag.toLowerCase()));
         
-        const isStillAssignedToThisItem = (currentHwId && h.id === currentHwId) || 
-                                          (currentTag && h.assetTag.toLowerCase() === currentTag);
+        const isStillAssigned = (currentHwIds.includes(h.id)) || (currentTags.includes(h.assetTag.toLowerCase()));
 
-        if (wasAssignedToThisMember && (!currentTag || !isStillAssignedToThisItem || record.status === 'Offboarded')) {
+        if (wasAssignedToThisMember && (!isStillAssigned || record.status === 'Offboarded')) {
           return {
             ...h,
             status: 'Available' as const,
@@ -241,49 +241,50 @@ export default function App() {
         return h;
       });
 
-      // 2. If member has hardware assigned and is not offboarded, link or create in fleet inventory
-      if (record.hardware.assetTag && record.status !== 'Offboarded') {
-        const matchedIndex = updated.findIndex(h => 
-          (record.hardware.hardwareId && h.id === record.hardware.hardwareId) ||
-          h.assetTag.toLowerCase() === record.hardware.assetTag.trim().toLowerCase()
-        );
+      // 2. Link or create fleet inventory entries for each hardware item
+      if (record.status !== 'Offboarded') {
+        record.hardware.forEach(hw => {
+          if (!hw.assetTag && !hw.pcLaptopModel) return;
+          const matchedIndex = updated.findIndex(h => 
+            (hw.hardwareId && h.id === hw.hardwareId) ||
+            (hw.assetTag && h.assetTag.toLowerCase() === hw.assetTag.trim().toLowerCase())
+          );
 
-        if (matchedIndex >= 0) {
-          updated = updated.map((h, idx) => {
-            if (idx === matchedIndex) {
-              return {
-                ...h,
-                deviceModel: record.hardware.pcLaptopModel || h.deviceModel,
-                serialNumber: record.hardware.serialNumber || h.serialNumber,
-                status: 'Assigned' as const,
-                assignedMemberId: record.id,
-                assignedMemberName: record.employeeName,
-                assignedDepartment: record.department,
-                updatedAt: new Date().toISOString()
-              };
-            }
-            return h;
-          });
-        } else {
-          // Not currently in inventory: register it into Hardware & Fleet inventory
-          const newHwItem: HardwareItem = {
-            id: record.hardware.hardwareId || `hw-${Date.now()}`,
-            assetTag: record.hardware.assetTag.trim(),
-            deviceModel: record.hardware.pcLaptopModel || 'Assigned Laptop',
-            deviceCategory: 'Laptop',
-            serialNumber: record.hardware.serialNumber || '',
-            specifications: record.hardware.remarks || 'Standard Resort SOE',
-            status: 'Assigned' as const,
-            assignedMemberId: record.id,
-            assignedMemberName: record.employeeName,
-            assignedDepartment: record.department,
-            condition: 'Good',
-            notes: 'Registered via Staff Profile Hardware Assignment',
-            purchaseDate: new Date().toISOString().split('T')[0],
-            updatedAt: new Date().toISOString()
-          };
-          updated = [newHwItem, ...updated];
-        }
+          if (matchedIndex >= 0) {
+            updated = updated.map((h, idx) => {
+              if (idx === matchedIndex) {
+                return {
+                  ...h,
+                  deviceModel: hw.pcLaptopModel || h.deviceModel,
+                  serialNumber: hw.serialNumber || h.serialNumber,
+                  status: 'Assigned' as const,
+                  assignedMemberId: record.id,
+                  assignedMemberName: record.employeeName,
+                  assignedDepartment: record.department,
+                  updatedAt: new Date().toISOString()
+                };
+              }
+              return h;
+            });
+          } else if (hw.assetTag) {
+            updated = [{
+              id: hw.hardwareId || `hw-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+              assetTag: hw.assetTag.trim(),
+              deviceModel: hw.pcLaptopModel || 'Assigned Device',
+              deviceCategory: 'Laptop' as DeviceCategory,
+              serialNumber: hw.serialNumber || '',
+              specifications: hw.remarks || 'Standard Resort SOE',
+              status: 'Assigned' as const,
+              assignedMemberId: record.id,
+              assignedMemberName: record.employeeName,
+              assignedDepartment: record.department,
+              condition: 'Good',
+              notes: 'Registered via Staff Profile Hardware Assignment',
+              purchaseDate: new Date().toISOString().split('T')[0],
+              updatedAt: new Date().toISOString()
+            }, ...updated];
+          }
+        });
       }
 
       return updated;
@@ -355,10 +356,11 @@ export default function App() {
       updatedAt: new Date().toISOString()
     };
 
-    if (nextStatus === 'Offboarded' && member.hardware.assetTag) {
-      // Automatically return hardware to Available stock
+    if (nextStatus === 'Offboarded' && member.hardware.length > 0) {
+      const hwIds = member.hardware.map(h => h.hardwareId).filter(Boolean);
+      const hwTags = member.hardware.map(h => h.assetTag?.trim().toLowerCase()).filter(Boolean);
       setHardwareInventory(prev => prev.map(h => {
-        if (h.assignedMemberId === member.id || (member.hardware.hardwareId && h.id === member.hardware.hardwareId)) {
+        if (h.assignedMemberId === member.id || hwIds.includes(h.id) || hwTags.includes(h.assetTag.toLowerCase())) {
           return {
             ...h,
             status: 'Available',
@@ -462,11 +464,7 @@ export default function App() {
     const targetMember = members.find(m => m.id === memberId);
     if (!hw || !targetMember) return;
 
-    // Check if targetMember already had another hardware assigned, and return it to stock
-    const prevHwId = targetMember.hardware.hardwareId;
-    const prevAssetTag = targetMember.hardware.assetTag;
-
-    // Update hardware inventory
+    // Update hardware inventory - mark this item as assigned
     setHardwareInventory(prev => prev.map(item => {
       if (item.id === hardwareId) {
         return {
@@ -479,31 +477,19 @@ export default function App() {
           updatedAt: new Date().toISOString()
         };
       }
-      // If another hardware was previously assigned to this member, return it to Available stock
-      if (item.id !== hardwareId && (item.assignedMemberId === targetMember.id || (prevHwId && item.id === prevHwId) || (prevAssetTag && item.assetTag.toLowerCase() === prevAssetTag.toLowerCase()))) {
-        return {
-          ...item,
-          status: 'Available',
-          assignedMemberId: null,
-          assignedMemberName: null,
-          assignedDepartment: null,
-          updatedAt: new Date().toISOString()
-        };
-      }
       return item;
     }));
 
-    // Update member record
+    // Add hardware to member's array (not replacing, adding)
     const updatedMember: TeamMemberRecord = {
       ...targetMember,
-      hardware: {
-        ...targetMember.hardware,
+      hardware: [...targetMember.hardware, {
         hardwareId: hw.id,
         pcLaptopModel: hw.deviceModel,
         serialNumber: hw.serialNumber,
         assetTag: hw.assetTag,
-        remarks: remarks || targetMember.hardware.remarks || `Assigned from VFAR Fleet inventory (${hw.deviceCategory})`
-      },
+        remarks: remarks || `Assigned from VFAR Fleet inventory (${hw.deviceCategory})`
+      }],
       updatedAt: new Date().toISOString()
     };
 
@@ -539,20 +525,13 @@ export default function App() {
       return item;
     }));
 
-    // If assigned to a member, clear their hardware assignment
+    // If assigned to a member, remove this hardware item from their array
     if (assignedMemberId) {
       setMembers(prev => prev.map(m => {
         if (m.id === assignedMemberId) {
           return {
             ...m,
-            hardware: {
-              ...m.hardware,
-              hardwareId: undefined,
-              pcLaptopModel: '',
-              serialNumber: '',
-              assetTag: '',
-              remarks: 'Hardware unassigned and returned to IT stock pool'
-            },
+            hardware: m.hardware.filter(h => h.hardwareId !== hardwareId && h.assetTag !== hw.assetTag),
             updatedAt: new Date().toISOString()
           };
         }
@@ -581,19 +560,18 @@ export default function App() {
         };
         setHardwareInventory(prev => [assignedItem, ...prev]);
 
-        // Update target member
+        // Add hardware to member's array
         setMembers(prev => prev.map(m => {
           if (m.id === targetMember.id) {
             return {
               ...m,
-              hardware: {
-                ...m.hardware,
+              hardware: [...m.hardware, {
                 hardwareId: assignedItem.id,
                 pcLaptopModel: assignedItem.deviceModel,
                 serialNumber: assignedItem.serialNumber,
                 assetTag: assignedItem.assetTag,
-                remarks: assignedItem.notes || m.hardware.remarks
-              },
+                remarks: assignedItem.notes || 'New fleet device assigned'
+              }],
               updatedAt: new Date().toISOString()
             };
           }
@@ -621,18 +599,17 @@ export default function App() {
 
   const handleUpdateHardwareItem = (updatedItem: HardwareItem) => {
     setHardwareInventory(prev => prev.map(h => h.id === updatedItem.id ? updatedItem : h));
-    // If assigned to a member, update member's hardware details
+    // If assigned to a member, update the matching hardware item in their array
     if (updatedItem.assignedMemberId) {
       setMembers(prev => prev.map(m => {
         if (m.id === updatedItem.assignedMemberId) {
           return {
             ...m,
-            hardware: {
-              ...m.hardware,
-              pcLaptopModel: updatedItem.deviceModel,
-              serialNumber: updatedItem.serialNumber,
-              assetTag: updatedItem.assetTag
-            },
+            hardware: m.hardware.map(h => 
+              h.hardwareId === updatedItem.id || h.assetTag === updatedItem.assetTag
+                ? { ...h, pcLaptopModel: updatedItem.deviceModel, serialNumber: updatedItem.serialNumber, assetTag: updatedItem.assetTag }
+                : h
+            ),
             updatedAt: new Date().toISOString()
           };
         }
@@ -646,19 +623,12 @@ export default function App() {
     if (!hw) return;
 
     if (hw.assignedMemberId) {
-      // Clear member assignment
+      // Remove this hardware item from member's array
       setMembers(prev => prev.map(m => {
         if (m.id === hw.assignedMemberId) {
           return {
             ...m,
-            hardware: {
-              ...m.hardware,
-              hardwareId: undefined,
-              pcLaptopModel: '',
-              serialNumber: '',
-              assetTag: '',
-              remarks: 'Equipment decommissioned / removed from fleet'
-            },
+            hardware: m.hardware.filter(h => h.hardwareId !== hardwareId && h.assetTag !== hw.assetTag),
             updatedAt: new Date().toISOString()
           };
         }

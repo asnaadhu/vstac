@@ -663,10 +663,10 @@ export const HardwareInventoryView: React.FC<HardwareInventoryViewProps> = ({
                   {members
                     .filter(m => m.status !== 'Offboarded')
                     .map(m => {
-                      const alreadyHasHardware = Boolean(m.hardware.assetTag);
+                      const alreadyHasHardware = m.hardware.length > 0;
                       return (
                         <option key={m.id} value={m.id}>
-                          {m.employeeName} ({m.jobTitle} · {m.department}) {alreadyHasHardware ? `[Already has: ${m.hardware.assetTag}]` : '[No hardware currently]'}
+                          {m.employeeName} ({m.jobTitle} · {m.department}) {alreadyHasHardware ? `[Has ${m.hardware.length} device(s)]` : '[No hardware currently]'}
                         </option>
                       );
                     })}

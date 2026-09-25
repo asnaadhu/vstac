@@ -16,12 +16,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Primary IT systems administrator for Avani+ Fares Maldives Resort (VFAR)'
     },
-    hardware: {
-      pcLaptopModel: 'Lenovo ThinkPad T14s Gen 4',
-      serialNumber: 'PF-VFAR-0019',
-      assetTag: 'VFAR-IT-0001',
-      remarks: 'Issued with field IT diagnostic kit, dual 27" Dell monitors & docking station'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Lenovo ThinkPad T14s Gen 4',
+        serialNumber: 'PF-VFAR-0019',
+        assetTag: 'VFAR-IT-0001',
+        remarks: 'Issued with field IT diagnostic kit, dual 27" Dell monitors & docking station'
+      }
+    ],
     activeDirectory: {
       username: 'asnaadhu_vfar',
       ouGroup: 'OU=IT,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -71,12 +73,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Primary custodian of fares_frontoffice@avanihotels.com'
     },
-    hardware: {
-      pcLaptopModel: 'Dell Latitude 7440',
-      serialNumber: 'DL-VFAR-4412',
-      assetTag: 'VFAR-IT-0012',
-      remarks: 'Front Desk primary supervisory laptop with dual displays'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Dell Latitude 7440',
+        serialNumber: 'DL-VFAR-4412',
+        assetTag: 'VFAR-IT-0012',
+        remarks: 'Front Desk primary supervisory laptop with dual displays'
+      }
+    ],
     activeDirectory: {
       username: 'hniuma_vfar',
       ouGroup: 'OU=FrontOffice,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -126,12 +130,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Access to fares_fboperations@avanihotels.com'
     },
-    hardware: {
-      pcLaptopModel: 'Lenovo ThinkPad T14 Gen 4',
-      serialNumber: 'PF-VFAR-8831',
-      assetTag: 'VFAR-IT-0025',
-      remarks: 'Allocated to F&B management office (Skipjack / Ocean Terrace)'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Lenovo ThinkPad T14 Gen 4',
+        serialNumber: 'PF-VFAR-8831',
+        assetTag: 'VFAR-IT-0025',
+        remarks: 'Allocated to F&B management office (Skipjack / Ocean Terrace)'
+      }
+    ],
     activeDirectory: {
       username: 'iziyan_vfar',
       ouGroup: 'OU=FoodBeverage,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -181,12 +187,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Marine biology education & guest diving center coordinator'
     },
-    hardware: {
-      pcLaptopModel: 'Apple MacBook Air 15" M3',
-      serialNumber: 'C02-VFAR-9102',
-      assetTag: 'VFAR-IT-0040',
-      remarks: 'Underwater photo processing & Hanifaru Bay research presentation station'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Apple MacBook Air 15" M3',
+        serialNumber: 'C02-VFAR-9102',
+        assetTag: 'VFAR-IT-0040',
+        remarks: 'Underwater photo processing & Hanifaru Bay research presentation station'
+      }
+    ],
     activeDirectory: {
       username: 'mlatheef_vfar',
       ouGroup: 'OU=MarineBiology,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -236,12 +244,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Island power, water & environmental engineering alerts'
     },
-    hardware: {
-      pcLaptopModel: 'Dell Latitude 5440 Rugged',
-      serialNumber: 'DL-VFAR-7182',
-      assetTag: 'VFAR-IT-0033',
-      remarks: 'Field rugged laptop with IP53 splash resistance for plant room'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Dell Latitude 5440 Rugged',
+        serialNumber: 'DL-VFAR-7182',
+        assetTag: 'VFAR-IT-0033',
+        remarks: 'Field rugged laptop with IP53 splash resistance for plant room'
+      }
+    ],
     activeDirectory: {
       username: 'mshaffaf_vfar',
       ouGroup: 'OU=Engineering,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -291,12 +301,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Villa turn-down & linen inventory custodian'
     },
-    hardware: {
-      pcLaptopModel: 'Lenovo ThinkPad L14 Gen 4',
-      serialNumber: 'PF-VFAR-3390',
-      assetTag: 'VFAR-IT-0062',
-      remarks: 'Housekeeping control desk station'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Lenovo ThinkPad L14 Gen 4',
+        serialNumber: 'PF-VFAR-3390',
+        assetTag: 'VFAR-IT-0062',
+        remarks: 'Housekeeping control desk station'
+      }
+    ],
     activeDirectory: {
       username: 'ahussain_vfar',
       ouGroup: 'OU=Housekeeping,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -346,12 +358,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Custodian of fares_finance@avanihotels.com'
     },
-    hardware: {
-      pcLaptopModel: 'Dell Latitude 7440',
-      serialNumber: 'DL-VFAR-9932',
-      assetTag: 'VFAR-IT-0018',
-      remarks: 'Finance secure machine with encrypted BitLocker SSD'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Dell Latitude 7440',
+        serialNumber: 'DL-VFAR-9932',
+        assetTag: 'VFAR-IT-0018',
+        remarks: 'Finance secure machine with encrypted BitLocker SSD'
+      }
+    ],
     activeDirectory: {
       username: 'fshifa_vfar',
       ouGroup: 'OU=Finance,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -401,12 +415,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Pending mobile authentication token setup in IT store'
     },
-    hardware: {
-      pcLaptopModel: 'Dell Latitude 3440',
-      serialNumber: 'DL-VFAR-1198',
-      assetTag: '',
-      remarks: 'Pending physical asset barcode tagging in IT staging rack'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Dell Latitude 3440',
+        serialNumber: 'DL-VFAR-1198',
+        assetTag: '',
+        remarks: 'Pending physical asset barcode tagging in IT staging rack'
+      }
+    ],
     activeDirectory: {
       username: 'anaseer_vfar',
       ouGroup: 'OU=FrontOffice,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -456,12 +472,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Oversees resort culinary operations & food hygiene HACCP audits'
     },
-    hardware: {
-      pcLaptopModel: 'Lenovo ThinkPad T14 Gen 4',
-      serialNumber: 'PF-VFAR-4491',
-      assetTag: 'VFAR-IT-0045',
-      remarks: 'Main culinary office station (equipped with water-resistant keyboard protector)'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Lenovo ThinkPad T14 Gen 4',
+        serialNumber: 'PF-VFAR-4491',
+        assetTag: 'VFAR-IT-0045',
+        remarks: 'Main culinary office station (equipped with water-resistant keyboard protector)'
+      }
+    ],
     activeDirectory: {
       username: 'hrasheed_vfar',
       ouGroup: 'OU=Culinary,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -511,12 +529,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Custodian of fares_hr@avanihotels.com and island staff welfare'
     },
-    hardware: {
-      pcLaptopModel: 'Dell Latitude 7440',
-      serialNumber: 'DL-VFAR-2289',
-      assetTag: 'VFAR-IT-0015',
-      remarks: 'HR confidential workstation with privacy screen filter'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Dell Latitude 7440',
+        serialNumber: 'DL-VFAR-2289',
+        assetTag: 'VFAR-IT-0015',
+        remarks: 'HR confidential workstation with privacy screen filter'
+      }
+    ],
     activeDirectory: {
       username: 'ashana_vfar',
       ouGroup: 'OU=HumanResources,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -566,12 +586,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: '24/7 Island security command center lead'
     },
-    hardware: {
-      pcLaptopModel: 'Dell Latitude 5440 Rugged',
-      serialNumber: 'DL-VFAR-6601',
-      assetTag: 'VFAR-IT-0070',
-      remarks: 'Security command center CCTV & access control monitoring console'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Dell Latitude 5440 Rugged',
+        serialNumber: 'DL-VFAR-6601',
+        assetTag: 'VFAR-IT-0070',
+        remarks: 'Security command center CCTV & access control monitoring console'
+      }
+    ],
     activeDirectory: {
       username: 'rlatheef_vfar',
       ouGroup: 'OU=Security,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -621,12 +643,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'On-island hardware support and network patching specialist'
     },
-    hardware: {
-      pcLaptopModel: 'Lenovo ThinkPad T14 Gen 4',
-      serialNumber: 'PF-VFAR-1104',
-      assetTag: 'VFAR-IT-0002',
-      remarks: 'Field technician laptop with USB console cable & Fluke network tester'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Lenovo ThinkPad T14 Gen 4',
+        serialNumber: 'PF-VFAR-1104',
+        assetTag: 'VFAR-IT-0002',
+        remarks: 'Field technician laptop with USB console cable & Fluke network tester'
+      }
+    ],
     activeDirectory: {
       username: 'hfayaz_vfar',
       ouGroup: 'OU=IT,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -676,12 +700,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: true,
       remarks: 'Oversees AvaniSpa treatment packages & therapists'
     },
-    hardware: {
-      pcLaptopModel: 'Lenovo ThinkPad X13 Gen 4',
-      serialNumber: 'PF-VFAR-7712',
-      assetTag: 'VFAR-IT-0051',
-      remarks: 'Spa reception supervisory workstation'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Lenovo ThinkPad X13 Gen 4',
+        serialNumber: 'PF-VFAR-7712',
+        assetTag: 'VFAR-IT-0051',
+        remarks: 'Spa reception supervisory workstation'
+      }
+    ],
     activeDirectory: {
       username: 'psharma_vfar',
       ouGroup: 'OU=SpaWellness,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',
@@ -731,12 +757,14 @@ export const INITIAL_MEMBERS: TeamMemberRecord[] = [
       functionalAccountMfa: false,
       remarks: 'Account disabled on 2026-09-15. Mailbox converted to shared archive.'
     },
-    hardware: {
-      pcLaptopModel: 'Lenovo ThinkPad E14 Gen 4',
-      serialNumber: 'PF-VFAR-9901',
-      assetTag: 'VFAR-IT-0088',
-      remarks: 'Returned to IT inventory room; wiped and SOE re-imaged.'
-    },
+    hardware: [
+      {
+        pcLaptopModel: 'Lenovo ThinkPad E14 Gen 4',
+        serialNumber: 'PF-VFAR-9901',
+        assetTag: 'VFAR-IT-0088',
+        remarks: 'Returned to IT inventory room; wiped and SOE re-imaged.'
+      }
+    ],
     activeDirectory: {
       username: 'amoosa_vfar',
       ouGroup: 'OU=DisabledAccounts,OU=AvaniFares,OU=Maldives,DC=minor,DC=corp',

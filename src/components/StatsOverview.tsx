@@ -9,7 +9,7 @@ import {
   Wifi, 
   AlertTriangle 
 } from 'lucide-react';
-import { TeamMemberRecord } from '../types';
+import { TeamMemberRecord, memberHasUntaggedHardware } from '../types';
 
 interface StatsOverviewProps {
   members: TeamMemberRecord[];
@@ -38,8 +38,8 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
   const oracleCount = members.filter(m => m.systems.oracleFusion.assigned && m.status === 'Active').length;
   const zenotiCount = members.filter(m => m.systems.zenoti.assigned && m.status === 'Active').length;
 
-  const taggedHardware = members.filter(m => Boolean(m.hardware.assetTag) && m.status === 'Active').length;
-  const missingAssetTag = members.filter(m => !m.hardware.assetTag && m.status === 'Active' && (m.hardware.pcLaptopModel || m.hardware.mobileModel)).length;
+  const taggedHardware = members.filter(m => m.hardware.length > 0 && m.hardware.every(h => h.assetTag) && m.status === 'Active').length;
+  const missingAssetTag = members.filter(m => memberHasUntaggedHardware(m) && m.status === 'Active').length;
 
   const vpnCount = members.filter(m => (m.vpn.minorVpn || m.vpn.vfarLocalVpn) && m.status === 'Active').length;
   const visionlineCount = members.filter(m => m.security.visionline.assigned && m.status === 'Active').length;

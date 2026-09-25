@@ -142,12 +142,12 @@ export const ROLE_PRESETS: Record<string, Partial<TeamMemberRecord>> = {
       functionalAccountMfa: true,
       remarks: ''
     },
-    hardware: {
+    hardware: [{
       pcLaptopModel: 'Lenovo ThinkPad T14 Gen 4',
       serialNumber: '',
       assetTag: '',
       remarks: 'Standard Front Desk station'
-    },
+    }],
     systems: {
       oracleFusion: { assigned: false, remarks: '' },
       operaCloud: { assigned: true, remarks: 'Front Desk Cashier & Check-in Profile' },
@@ -176,12 +176,12 @@ export const ROLE_PRESETS: Record<string, Partial<TeamMemberRecord>> = {
       functionalAccountMfa: true,
       remarks: ''
     },
-    hardware: {
+    hardware: [{
       pcLaptopModel: 'Dell Latitude 3440',
       serialNumber: '',
       assetTag: '',
       remarks: ''
-    },
+    }],
     systems: {
       oracleFusion: { assigned: false, remarks: '' },
       operaCloud: { assigned: true, remarks: 'Guest in-house room verification' },
@@ -209,12 +209,12 @@ export const ROLE_PRESETS: Record<string, Partial<TeamMemberRecord>> = {
       functionalAccountMfa: true,
       remarks: ''
     },
-    hardware: {
+    hardware: [{
       pcLaptopModel: 'Lenovo ThinkPad T14s Gen 4',
       serialNumber: '',
       assetTag: '',
       remarks: 'Executive HOD package'
-    },
+    }],
     systems: {
       oracleFusion: { assigned: true, remarks: 'PR/PO Approvals & Budget tracking' },
       operaCloud: { assigned: true, remarks: 'Departmental reports & forecasts' },
@@ -242,12 +242,12 @@ export const ROLE_PRESETS: Record<string, Partial<TeamMemberRecord>> = {
       functionalAccountMfa: false,
       remarks: 'Frontline worker license'
     },
-    hardware: {
+    hardware: [{
       pcLaptopModel: 'Dell OptiPlex Micro',
       serialNumber: '',
       assetTag: '',
       remarks: 'Department shared PC'
-    },
+    }],
     systems: {
       oracleFusion: { assigned: false, remarks: '' },
       operaCloud: { assigned: true, remarks: 'Room status update only' },
@@ -330,10 +330,10 @@ export function exportToCSV(members: TeamMemberRecord[]): string {
     m.email.dhDL ? 'YES' : 'NO',
     m.email.functionalAccountMfa ? 'YES' : 'NO',
     m.email.remarks,
-    m.hardware.pcLaptopModel,
-    m.hardware.serialNumber,
-    m.hardware.assetTag,
-    m.hardware.remarks,
+    m.hardware.map(h => h.pcLaptopModel).join('; '),
+    m.hardware.map(h => h.serialNumber).join('; '),
+    m.hardware.map(h => h.assetTag).join('; '),
+    m.hardware.map(h => h.remarks).join('; '),
     m.activeDirectory.username,
     m.activeDirectory.ouGroup,
     m.activeDirectory.remarks,
@@ -452,12 +452,14 @@ export function parseCSVToMembers(csvText: string): TeamMemberRecord[] {
         functionalAccountMfa: bool(cols[10]),
         remarks: cols[11] || ''
       },
-      hardware: {
-        pcLaptopModel: cols[12] || '',
-        serialNumber: cols[13] || '',
-        assetTag: cols[14] || '',
-        remarks: cols[15] || ''
-      },
+      hardware: (cols[12] || cols[13] || cols[14])
+        ? [{
+            pcLaptopModel: cols[12] || '',
+            serialNumber: cols[13] || '',
+            assetTag: cols[14] || '',
+            remarks: cols[15] || ''
+          }]
+        : [],
       activeDirectory: {
         username: cols[16] || '',
         ouGroup: cols[17] || '',
@@ -513,12 +515,7 @@ export function createBlankMember(): TeamMemberRecord {
       functionalAccountMfa: true,
       remarks: ''
     },
-    hardware: {
-      pcLaptopModel: '',
-      serialNumber: '',
-      assetTag: '',
-      remarks: ''
-    },
+    hardware: [],
     activeDirectory: {
       username: '',
       ouGroup: 'OU=Staff,OU=AvaniFares,DC=minor,DC=corp',

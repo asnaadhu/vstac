@@ -19,7 +19,7 @@ import {
   FileText,
   QrCode
 } from 'lucide-react';
-import { TeamMemberRecord } from '../types';
+import { TeamMemberRecord, memberPrimaryAssetTag, memberHasHardware } from '../types';
 
 interface MemberDetailDrawerProps {
   member: TeamMemberRecord | null;
@@ -157,14 +157,15 @@ export const MemberDetailDrawer: React.FC<MemberDetailDrawerProps> = ({
               </button>
             )}
 
-            {member.hardware.assetTag && (
+            {memberPrimaryAssetTag(member) && (
               <button
-                onClick={() => copyToClipboard(member.hardware.assetTag, 'asset')}
+                onClick={() => copyToClipboard(memberPrimaryAssetTag(member), 'asset')}
                 className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded text-blue-900 font-semibold transition-colors"
                 title="Copy Asset Tag"
               >
                 {copiedKey === 'asset' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3 text-blue-600" />}
-                <span>Tag: {member.hardware.assetTag}</span>
+                <span>Tag: {memberPrimaryAssetTag(member)}</span>
+                {member.hardware.length > 1 && <span className="text-blue-400">+{member.hardware.length - 1}</span>}
               </button>
             )}
           </div>
@@ -242,16 +243,16 @@ export const MemberDetailDrawer: React.FC<MemberDetailDrawerProps> = ({
             </div>
           </div>
 
-          {/* Section 2: Hardware & Device */}
+          {/* Section 2: Hardware & Devices */}
           <div className="bg-slate-50/70 border border-slate-200 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-slate-800 uppercase tracking-wider text-[11px] flex items-center gap-2">
-                <Laptop className="w-4 h-4 text-blue-600" /> 2. Hardware & Fleet Device
+                <Laptop className="w-4 h-4 text-blue-600" /> 2. Hardware & Fleet Devices ({member.hardware.length})
               </h3>
-              {member.hardware.assetTag && onViewHardwareQR && (
+              {memberPrimaryAssetTag(member) && onViewHardwareQR && (
                 <button
                   type="button"
-                  onClick={() => onViewHardwareQR(member.hardware.assetTag)}
+                  onClick={() => onViewHardwareQR(memberPrimaryAssetTag(member))}
                   className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-blue-900 bg-blue-100 hover:bg-blue-200 rounded-lg border border-blue-300 transition-colors shadow-sm"
                   title="View full QR sticker, printable label & equipment details"
                 >
@@ -260,32 +261,45 @@ export const MemberDetailDrawer: React.FC<MemberDetailDrawerProps> = ({
                 </button>
               )}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              <div>
-                <div className="text-slate-500 text-[11px]">PC / Laptop Model</div>
-                <div className="text-slate-900 font-medium mt-0.5">
-                  {member.hardware.pcLaptopModel || '—'}
-                </div>
+            {member.hardware.length === 0 ? (
+              <div className="py-4 text-center text-slate-500">
+                <Laptop className="w-6 h-6 text-slate-300 mx-auto mb-1.5" />
+                <p className="text-[11px]">No hardware assigned — not all staff require devices.</p>
               </div>
-              <div>
-                <div className="text-slate-500 text-[11px]">Serial Number (S/N)</div>
-                <div className="text-slate-900 font-mono font-medium mt-0.5">
-                  {member.hardware.serialNumber || '—'}
-                </div>
+            ) : (
+              <div className="space-y-3">
+                {member.hardware.map((hw, idx) => (
+                  <div key={idx} className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 p-3 bg-white rounded-lg border border-slate-200">
+                    <div>
+                      <div className="text-slate-500 text-[11px]">Device Model</div>
+                      <div className="text-slate-900 font-medium mt-0.5">
+                        {hw.pcLaptopModel || '—'}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-slate-500 text-[11px]">Serial Number (S/N)</div>
+                      <div className="text-slate-900 font-mono font-medium mt-0.5">
+                        {hw.serialNumber || '—'}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-slate-500 text-[11px]">Asset Tag</div>
+                      <div className="text-blue-800 font-mono font-bold mt-0.5">
+                        {hw.assetTag || (hw.pcLaptopModel ? 'Untagged' : 'None')}
+                      </div>
+                    </div>
+                    {hw.remarks && (
+                      <div className="sm:col-span-3">
+                        <div className="text-slate-500 text-[11px]">Remarks</div>
+                        <div className="text-slate-700 mt-0.5 italic">
+                          {hw.remarks}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-              <div>
-                <div className="text-slate-500 text-[11px]">Asset Tag</div>
-                <div className="text-blue-800 font-mono font-bold mt-0.5">
-                  {member.hardware.assetTag || (member.hardware.pcLaptopModel || member.hardware.mobileModel ? 'Untagged' : 'None')}
-                </div>
-              </div>
-              <div className="sm:col-span-3">
-                <div className="text-slate-500 text-[11px]">Hardware Remarks</div>
-                <div className="text-slate-700 mt-0.5 italic">
-                  {member.hardware.remarks || 'None'}
-                </div>
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Section 3 & 4: Active Directory & Remote Connectivity (VPN) */}

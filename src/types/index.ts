@@ -28,6 +28,14 @@ export interface SystemAccessItem {
   remarks: string;
 }
 
+export interface MemberHardwareItem {
+  hardwareId?: string;
+  pcLaptopModel: string;
+  serialNumber: string;
+  assetTag: string;
+  remarks: string;
+}
+
 export interface TeamMemberRecord {
   id: string; // UUID / timestamp
   employeeName: string;
@@ -46,14 +54,8 @@ export interface TeamMemberRecord {
     remarks: string;
   };
 
-  // 2. Hardware & Device
-  hardware: {
-    hardwareId?: string;
-    pcLaptopModel: string;
-    serialNumber: string;
-    assetTag: string;
-    remarks: string;
-  };
+  // 2. Hardware & Devices (multiple items supported)
+  hardware: MemberHardwareItem[];
 
   // 3. Active Directory
   activeDirectory: {
@@ -124,4 +126,22 @@ export interface FilterState {
   vpnOnly: boolean;
   leadersDLOnly: boolean;
   missingAssetTag: boolean;
+}
+
+// Helper functions for multi-hardware support
+export function memberHasHardware(m: TeamMemberRecord): boolean {
+  return m.hardware.length > 0;
+}
+
+export function memberHasUntaggedHardware(m: TeamMemberRecord): boolean {
+  return m.hardware.some(h => h.pcLaptopModel && !h.assetTag);
+}
+
+export function memberUntaggedCount(m: TeamMemberRecord): number {
+  return m.hardware.filter(h => h.pcLaptopModel && !h.assetTag).length;
+}
+
+export function memberPrimaryAssetTag(m: TeamMemberRecord): string {
+  const tagged = m.hardware.find(h => h.assetTag);
+  return tagged ? tagged.assetTag : '';
 }

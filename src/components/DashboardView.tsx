@@ -12,7 +12,7 @@ import {
   ExternalLink,
   Shield,
 } from 'lucide-react';
-import { TeamMemberRecord, AuditLogEntry, ActiveTab } from '../types';
+import { TeamMemberRecord, AuditLogEntry, ActiveTab, memberHasHardware, memberHasUntaggedHardware, memberPrimaryAssetTag } from '../types';
 import { DEPARTMENT_OPTIONS } from '../data/initialData';
 
 interface DashboardViewProps {
@@ -50,9 +50,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const minorAppCount = activeMembers.filter(m => m.systems.minorHotelsApp.assigned).length;
   const visionlineCount = activeMembers.filter(m => m.security.visionline.assigned).length;
 
-  const deployedHardware = members.filter(m => Boolean(m.hardware.pcLaptopModel) && m.status !== 'Offboarded');
-  const taggedHardware = deployedHardware.filter(m => Boolean(m.hardware.assetTag));
-  const untaggedHardware = deployedHardware.filter(m => !m.hardware.assetTag);
+  const deployedHardware = members.filter(m => memberHasHardware(m) && m.status !== 'Offboarded');
+  const taggedHardware = deployedHardware.filter(m => m.hardware.every(h => h.assetTag));
+  const untaggedHardware = deployedHardware.filter(m => m.hardware.some(h => !h.assetTag));
   const tagCompliancePct = deployedHardware.length > 0
     ? Math.round((taggedHardware.length / deployedHardware.length) * 100)
     : 100;
@@ -65,8 +65,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     const deptSimphony = deptMembers.filter(m => m.systems.microsSimphony.assigned).length;
     const deptM365 = deptMembers.filter(m => m.email.licenseType !== 'None').length;
     const deptVpn = deptMembers.filter(m => m.vpn.vfarLocalVpn).length;
-    const deptWithHardware = deptMembers.filter(m => m.hardware.pcLaptopModel || m.hardware.mobileModel);
-    const deptTagged = deptMembers.filter(m => Boolean(m.hardware.assetTag)).length;
+    const deptWithHardware = deptMembers.filter(m => memberHasHardware(m));
+    const deptTagged = deptMembers.filter(m => memberHasHardware(m) && m.hardware.every(h => h.assetTag)).length;
     return {
       department: dept,
       totalActive: deptMembers.length,

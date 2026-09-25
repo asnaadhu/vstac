@@ -11,7 +11,7 @@ import {
   AlertCircle,
   QrCode,
 } from 'lucide-react';
-import { TeamMemberRecord, MemberStatus, FilterState } from '../types';
+import { TeamMemberRecord, MemberStatus, FilterState, memberHasHardware, memberHasUntaggedHardware, memberPrimaryAssetTag } from '../types';
 import { DEPARTMENT_OPTIONS } from '../data/initialData';
 import { exportToCSV, downloadFile } from '../utils/storage';
 
@@ -54,8 +54,8 @@ export const MemberTable: React.FC<MemberTableProps> = ({
         const matchJob = m.jobTitle.toLowerCase().includes(q);
         const matchEmail = m.email.address.toLowerCase().includes(q);
         const matchAD = m.activeDirectory.username.toLowerCase().includes(q);
-        const matchSerial = m.hardware.serialNumber.toLowerCase().includes(q);
-        const matchAsset = m.hardware.assetTag.toLowerCase().includes(q);
+        const matchSerial = m.hardware.some(h => h.serialNumber.toLowerCase().includes(q));
+        const matchAsset = m.hardware.some(h => h.assetTag.toLowerCase().includes(q));
         const matchPhone = m.telephony.companyNumber.toLowerCase().includes(q);
         if (!matchName && !matchJob && !matchEmail && !matchAD && !matchSerial && !matchAsset && !matchPhone) {
           return false;
@@ -71,7 +71,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
       }
       if (filterState.vpnOnly && !m.vpn.minorVpn && !m.vpn.vfarLocalVpn) return false;
       if (filterState.leadersDLOnly && !m.email.leadersDL) return false;
-      if (filterState.missingAssetTag && (m.hardware.assetTag.trim().length > 0 || m.status === 'Offboarded' || (!m.hardware.pcLaptopModel && !m.hardware.mobileModel))) return false;
+      if (filterState.missingAssetTag && (!memberHasHardware(m) || !memberHasUntaggedHardware(m) || m.status === 'Offboarded')) return false;
       return true;
     });
   }, [members, filterState]);
@@ -356,23 +356,33 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                       </td>
 
                       <td className="py-3.5 px-4">
-                        {member.hardware.assetTag ? (
-                          <button
-                            type="button"
-                            onClick={() => onViewHardwareQR ? onViewHardwareQR(member.hardware.assetTag!) : onSelectMember(member)}
-                            className="text-sm font-medium text-blue-700 hover:text-blue-900 hover:bg-blue-50 px-2 py-1 rounded border border-blue-200 transition-colors flex items-center gap-1.5"
-                            title="View QR code & hardware details"
-                          >
-                            <QrCode className="w-3.5 h-3.5" />
-                            {member.hardware.assetTag}
-                          </button>
-                        ) : member.hardware.pcLaptopModel || member.hardware.mobileModel ? (
-                          <span className="text-sm text-rose-600 font-medium flex items-center gap-1">
-                            <AlertCircle className="w-3.5 h-3.5" /> Untagged
-                          </span>
-                        ) : (
-                          <span className="text-sm text-slate-400">No hardware</span>
-                        )}
+                        {(() => {
+                          const primaryTag = memberPrimaryAssetTag(member);
+                          if (primaryTag) {
+                            return (
+                              <button
+                                type="button"
+                                onClick={() => onViewHardwareQR ? onViewHardwareQR(primaryTag) : onSelectMember(member)}
+                                className="text-sm font-medium text-blue-700 hover:text-blue-900 hover:bg-blue-50 px-2 py-1 rounded border border-blue-200 transition-colors flex items-center gap-1.5"
+                                title="View QR code & hardware details"
+                              >
+                                <QrCode className="w-3.5 h-3.5" />
+                                {primaryTag}
+                                {member.hardware.length > 1 && (
+                                  <span className="text-slate-400 font-normal">+{member.hardware.length - 1}</span>
+                                )}
+                              </button>
+                            );
+                          }
+                          if (memberHasUntaggedHardware(member)) {
+                            return (
+                              <span className="text-sm text-rose-600 font-medium flex items-center gap-1">
+                                <AlertCircle className="w-3.5 h-3.5" /> Untagged
+                              </span>
+                            );
+                          }
+                          return <span className="text-sm text-slate-400">No hardware</span>;
+                        })()}
                       </td>
 
                       <td className="py-3.5 px-4 text-right whitespace-nowrap">

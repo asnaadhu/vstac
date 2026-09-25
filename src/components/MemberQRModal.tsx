@@ -20,7 +20,7 @@ import {
   Wifi
 } from 'lucide-react';
 import QRCode from 'qrcode';
-import { TeamMemberRecord } from '../types';
+import { TeamMemberRecord, memberPrimaryAssetTag, memberHasHardware } from '../types';
 
 interface MemberQRModalProps {
   isOpen: boolean;
@@ -56,7 +56,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
       `ORG:Avani+ Fares Maldives Resort;${member.department}`,
       `EMAIL:${member.email.address}`,
       `TEL;TYPE=WORK:${member.telephony.companyNumber || '+960 660 8888'}`,
-      `NOTE:Minor Hotels IT ID: ${member.id} | AD: ${member.activeDirectory.username} | Tag: ${member.hardware.assetTag || (member.hardware.pcLaptopModel || member.hardware.mobileModel ? 'Untagged' : 'None')} | Direct Link: ${deepLinkUrl}`,
+      `NOTE:Minor Hotels IT ID: ${member.id} | AD: ${member.activeDirectory.username} | Tags: ${member.hardware.map(h => h.assetTag || 'Untagged').join('; ') || 'None'} | Direct Link: ${deepLinkUrl}`,
       `URL:${deepLinkUrl}`,
       'END:VCARD'
     ].join('\n');
@@ -221,7 +221,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
               </div>
               <div class="meta-row">
                 <span><strong>Status:</strong> ${member.status}</span>
-                <span><strong>Hardware Tag:</strong> ${member.hardware.assetTag || 'None'}</span>
+                <span><strong>Hardware Tag:</strong> ${member.hardware.map(h => h.assetTag || 'Untagged').join('; ') || 'None'}</span>
               </div>
               <div class="url-footer">
                 Scan to open digital personnel profile: ${deepLinkUrl}
@@ -405,10 +405,10 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                   <div>
                     <span className="text-slate-500">Assigned Hardware:</span>
                     <div className="font-mono font-semibold text-blue-900 truncate">
-                      {member.hardware.assetTag ? (
-                        <span className="bg-blue-100 px-1 rounded">{member.hardware.assetTag}</span>
+                      {member.hardware.length > 0 ? (
+                        <span className="bg-blue-100 px-1 rounded">{member.hardware.map(h => h.assetTag || 'Untagged').join(', ')}</span>
                       ) : (
-                        <span className="text-slate-400">No Hardware Tag</span>
+                        <span className="text-slate-400">No Hardware</span>
                       )}
                     </div>
                   </div>
@@ -445,15 +445,15 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
                 <Laptop className="w-3.5 h-3.5 text-blue-600" /> Device Model
               </div>
               <div className="text-slate-900 font-medium truncate">
-                {member.hardware.pcLaptopModel || 'BYOD / None'}
+                {member.hardware.length > 0 ? member.hardware.map(h => h.pcLaptopModel).join(', ') : 'No hardware'}
               </div>
-              {member.hardware.assetTag && onViewHardware && (
+              {memberPrimaryAssetTag(member) && onViewHardware && (
                 <button
                   type="button"
-                  onClick={() => onViewHardware(member.hardware.assetTag)}
+                  onClick={() => onViewHardware(memberPrimaryAssetTag(member))}
                   className="text-[10px] font-semibold text-blue-800 hover:underline mt-0.5 flex items-center gap-1"
                 >
-                  <span>View Equipment QR ({member.hardware.assetTag})</span>
+                  <span>View Equipment QR ({memberPrimaryAssetTag(member)})</span>
                 </button>
               )}
             </div>

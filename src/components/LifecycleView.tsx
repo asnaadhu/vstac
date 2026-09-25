@@ -41,8 +41,8 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
     { 
       id: 'hardware', 
       title: 'Laptop Preparation, Asset Tag & Serial Log', 
-      completed: Boolean(m.hardware.pcLaptopModel && m.hardware.assetTag),
-      desc: m.hardware.assetTag ? `Tag: ${m.hardware.assetTag} (${m.hardware.pcLaptopModel})` : 'Hardware staging pending'
+      completed: m.hardware.length > 0 && m.hardware.every(h => h.assetTag),
+      desc: m.hardware.length > 0 ? `${m.hardware.length} device(s) · Tags: ${m.hardware.map(h => h.assetTag || 'Untagged').join(', ')}` : 'No hardware assigned'
     },
     { 
       id: 'systems', 
@@ -74,8 +74,8 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
     { 
       id: 'hardware_return', 
       title: 'Laptop & Hardware Reclaimed to IT Storage', 
-      completed: m.status === 'Offboarded' && !m.hardware.assetTag,
-      desc: m.status === 'Offboarded' ? 'Hardware returned' : (m.hardware.pcLaptopModel || m.hardware.mobileModel) ? `Checked out (${m.hardware.assetTag || 'Untagged'})` : 'No hardware assigned'
+      completed: m.status === 'Offboarded' && m.hardware.length === 0,
+      desc: m.status === 'Offboarded' ? 'Hardware returned' : m.hardware.length > 0 ? `${m.hardware.length} device(s) assigned` : 'No hardware assigned'
     },
     { 
       id: 'systems_revoke', 
