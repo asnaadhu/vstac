@@ -56,7 +56,7 @@ export const MemberQRModal: React.FC<MemberQRModalProps> = ({
       `ORG:Avani+ Fares Maldives Resort;${member.department}`,
       `EMAIL:${member.email.address}`,
       `TEL;TYPE=WORK:${member.telephony.companyNumber || '+960 660 8888'}`,
-      `NOTE:Minor Hotels IT ID: ${member.id} | AD: ${member.activeDirectory.username} | Tag: ${member.hardware.assetTag || 'Untagged'} | Direct Link: ${deepLinkUrl}`,
+      `NOTE:Minor Hotels IT ID: ${member.id} | AD: ${member.activeDirectory.username} | Tag: ${member.hardware.assetTag || (member.hardware.pcLaptopModel || member.hardware.mobileModel ? 'Untagged' : 'None')} | Direct Link: ${deepLinkUrl}`,
       `URL:${deepLinkUrl}`,
       'END:VCARD'
     ].join('\n');

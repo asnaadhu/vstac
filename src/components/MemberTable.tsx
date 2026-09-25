@@ -71,7 +71,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
       }
       if (filterState.vpnOnly && !m.vpn.minorVpn && !m.vpn.vfarLocalVpn) return false;
       if (filterState.leadersDLOnly && !m.email.leadersDL) return false;
-      if (filterState.missingAssetTag && (m.hardware.assetTag.trim().length > 0 || m.status === 'Offboarded')) return false;
+      if (filterState.missingAssetTag && (m.hardware.assetTag.trim().length > 0 || m.status === 'Offboarded' || (!m.hardware.pcLaptopModel && !m.hardware.mobileModel))) return false;
       return true;
     });
   }, [members, filterState]);
@@ -366,12 +366,12 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                             <QrCode className="w-3.5 h-3.5" />
                             {member.hardware.assetTag}
                           </button>
-                        ) : member.status !== 'Offboarded' ? (
+                        ) : member.hardware.pcLaptopModel || member.hardware.mobileModel ? (
                           <span className="text-sm text-rose-600 font-medium flex items-center gap-1">
                             <AlertCircle className="w-3.5 h-3.5" /> Untagged
                           </span>
                         ) : (
-                          <span className="text-sm text-slate-400">—</span>
+                          <span className="text-sm text-slate-400">No hardware</span>
                         )}
                       </td>
 

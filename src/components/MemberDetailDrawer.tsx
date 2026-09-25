@@ -276,7 +276,7 @@ export const MemberDetailDrawer: React.FC<MemberDetailDrawerProps> = ({
               <div>
                 <div className="text-slate-500 text-[11px]">Asset Tag</div>
                 <div className="text-blue-800 font-mono font-bold mt-0.5">
-                  {member.hardware.assetTag || 'Untagged'}
+                  {member.hardware.assetTag || (member.hardware.pcLaptopModel || member.hardware.mobileModel ? 'Untagged' : 'None')}
                 </div>
               </div>
               <div className="sm:col-span-3">

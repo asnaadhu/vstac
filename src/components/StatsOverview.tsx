@@ -39,7 +39,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
   const zenotiCount = members.filter(m => m.systems.zenoti.assigned && m.status === 'Active').length;
 
   const taggedHardware = members.filter(m => Boolean(m.hardware.assetTag) && m.status === 'Active').length;
-  const missingAssetTag = members.filter(m => !m.hardware.assetTag && m.status === 'Active').length;
+  const missingAssetTag = members.filter(m => !m.hardware.assetTag && m.status === 'Active' && (m.hardware.pcLaptopModel || m.hardware.mobileModel)).length;
 
   const vpnCount = members.filter(m => (m.vpn.minorVpn || m.vpn.vfarLocalVpn) && m.status === 'Active').length;
   const visionlineCount = members.filter(m => m.security.visionline.assigned && m.status === 'Active').length;

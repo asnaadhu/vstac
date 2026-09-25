@@ -65,6 +65,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     const deptSimphony = deptMembers.filter(m => m.systems.microsSimphony.assigned).length;
     const deptM365 = deptMembers.filter(m => m.email.licenseType !== 'None').length;
     const deptVpn = deptMembers.filter(m => m.vpn.vfarLocalVpn).length;
+    const deptWithHardware = deptMembers.filter(m => m.hardware.pcLaptopModel || m.hardware.mobileModel);
     const deptTagged = deptMembers.filter(m => Boolean(m.hardware.assetTag)).length;
     return {
       department: dept,
@@ -73,7 +74,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       simphonySeats: deptSimphony,
       m365Assigned: deptM365,
       vfarVpnCount: deptVpn,
-      taggedPct: deptMembers.length > 0 ? Math.round((deptTagged / deptMembers.length) * 100) : 100
+      taggedPct: deptWithHardware.length > 0 ? Math.round((deptTagged / deptWithHardware.length) * 100) : 100
     };
   }).filter(d => d.totalActive > 0);
 

@@ -75,7 +75,7 @@ export const LifecycleView: React.FC<LifecycleViewProps> = ({
       id: 'hardware_return', 
       title: 'Laptop & Hardware Reclaimed to IT Storage', 
       completed: m.status === 'Offboarded' && !m.hardware.assetTag,
-      desc: m.status === 'Offboarded' ? 'Hardware returned' : `Checked out (${m.hardware.assetTag || 'Untagged'})`
+      desc: m.status === 'Offboarded' ? 'Hardware returned' : (m.hardware.pcLaptopModel || m.hardware.mobileModel) ? `Checked out (${m.hardware.assetTag || 'Untagged'})` : 'No hardware assigned'
     },
     { 
       id: 'systems_revoke', 
