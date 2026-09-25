@@ -1,0 +1,6 @@
+{
+  "name": "Minor Hotels IT Asset & Access Tracker",
+  "description": "Enterprise IT asset, access, software license, and PMS operations tracker for hospitality team members across properties and corporate divisions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
