@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Building2,
   Menu,
@@ -6,7 +6,8 @@ import {
   Plus,
   Download,
   RotateCcw,
-  QrCode
+  QrCode,
+  MoreVertical
 } from 'lucide-react';
 import { TeamMemberRecord, ActiveTab } from '../types';
 
@@ -33,6 +34,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMobileSidebar,
   onOpenQRScanner
 }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const getTabLabel = (tab: ActiveTab) => {
     switch (tab) {
       case 'dashboard': return 'Statistics & Operations Dashboard';
@@ -104,17 +107,19 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Quick Actions */}
-            <div className="hidden sm:flex items-center gap-1.5">
-              {onOpenQRScanner && (
-                <button
-                  onClick={onOpenQRScanner}
-                  className="p-2 text-blue-700 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition-colors flex items-center gap-1"
-                  title="Scan / Lookup Hardware QR Asset Code"
-                >
-                  <QrCode className="w-4 h-4 text-blue-600" />
-                </button>
-              )}
+            {/* QR Scanner — always visible (most useful on phones) */}
+            {onOpenQRScanner && (
+              <button
+                onClick={onOpenQRScanner}
+                className="p-2 text-blue-700 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition-colors flex items-center gap-1 shrink-0"
+                title="Scan / Lookup Hardware QR Asset Code"
+              >
+                <QrCode className="w-4 h-4 text-blue-600" />
+              </button>
+            )}
 
+            {/* Desktop actions */}
+            <div className="hidden sm:flex items-center gap-1.5">
               <button
                 onClick={onOpenImportExport}
                 className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors"
@@ -130,6 +135,38 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Mobile overflow menu */}
+            <div className="sm:hidden relative">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors"
+                title="More actions"
+              >
+                <MoreVertical className="w-4 h-4" />
+              </button>
+              {mobileMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-10" onClick={() => setMobileMenuOpen(false)} />
+                  <div className="absolute right-0 top-full mt-1 z-20 bg-white border border-slate-200 rounded-xl shadow-lg py-1 min-w-[180px]">
+                    <button
+                      onClick={() => { onOpenImportExport(); setMobileMenuOpen(false); }}
+                      className="w-full px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                    >
+                      <Download className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Import / Export</span>
+                    </button>
+                    <button
+                      onClick={() => { onResetDemoData(); setMobileMenuOpen(false); }}
+                      className="w-full px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Reset Demo Data</span>
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Add Member CTA */}

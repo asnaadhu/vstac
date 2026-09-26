@@ -96,8 +96,8 @@ export const AccessMatrixView: React.FC<AccessMatrixViewProps> = ({
         </div>
       </div>
 
-      {/* Access Grid Table */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      {/* Desktop Access Grid Table (md and up) */}
+      <div className="hidden md:block bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-700">
             <thead className="bg-slate-50/90 text-slate-600 border-b border-slate-200 sticky top-0 select-none">
@@ -184,9 +184,71 @@ export const AccessMatrixView: React.FC<AccessMatrixViewProps> = ({
           <span>
             Displaying <strong>{filteredMembers.length}</strong> active members in authorization matrix
           </span>
-          <span className="text-slate-400 text-[11px]">
+          <span className="text-slate-400 text-[11px] hidden sm:inline">
             Changes to system access are instantly synchronized and logged to the security audit trail.
           </span>
+        </div>
+      </div>
+
+      {/* Mobile Card View (below md) */}
+      <div className="md:hidden space-y-3">
+        {filteredMembers.length === 0 ? (
+          <div className="bg-white border border-slate-200 rounded-xl py-12 text-center shadow-sm">
+            <p className="text-sm font-medium text-slate-700">No staff found</p>
+            <p className="text-xs text-slate-500 mt-1">Try a different search.</p>
+          </div>
+        ) : (
+          filteredMembers.map((member) => {
+            const getIsAssigned = (key: string): boolean => {
+              if (key === 'visionline') return member.security.visionline.assigned;
+              if (key === 'adobeCc') return member.creativeProductivity.adobeCc.assigned;
+              if (key === 'minorVpn') return member.vpn.minorVpn;
+              if (key === 'vfarLocalVpn') return member.vpn.vfarLocalVpn;
+              const sys = member.systems[key as keyof TeamMemberRecord['systems']];
+              return sys ? sys.assigned : false;
+            };
+            const assignedCount = systemsCols.filter(col => getIsAssigned(col.key)).length;
+
+            return (
+              <div key={member.id} className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-slate-900 text-sm truncate">{member.employeeName}</div>
+                    <div className="text-xs text-slate-500 truncate">{member.jobTitle} · {member.department}</div>
+                  </div>
+                  <span className="text-[10px] font-mono font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded-full shrink-0 ml-2">
+                    {assignedCount}/{systemsCols.length}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {systemsCols.map(col => {
+                    const assigned = getIsAssigned(col.key);
+                    return (
+                      <button
+                        key={col.key}
+                        onClick={() => onToggleSystemAccess(member.id, col.key as any, assigned)}
+                        className={`flex items-center justify-between px-2.5 py-2 rounded-lg text-[11px] font-medium transition-all ${
+                          assigned
+                            ? 'bg-blue-50 text-blue-900 border border-blue-200'
+                            : 'bg-slate-50 text-slate-500 border border-slate-200'
+                        }`}
+                      >
+                        <span className="truncate">{col.label}</span>
+                        {assigned ? (
+                          <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                        ) : (
+                          <X className="w-3.5 h-3.5 text-slate-300 shrink-0" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })
+        )}
+        <div className="text-center text-xs text-slate-500 py-2">
+          Displaying <strong>{filteredMembers.length}</strong> active members
         </div>
       </div>
 

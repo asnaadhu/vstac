@@ -89,3 +89,35 @@ button, a, input, select, textarea {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* === Mobile optimizations === */
+
+/* Prevent iOS Safari auto-zoom when focusing inputs (font-size < 16px triggers it) */
+@media (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* Remove blue tap highlight on iOS and double-tap zoom delay */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Prevent background scroll chaining inside modals/drawers */
+body {
+  overscroll-behavior: none;
+}
+
+/* Safe area insets for notched phones (iPhone X+) */
+.safe-top { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+/* Prevent text selection on UI chrome during scroll */
+@media (max-width: 640px) {
+  button, nav, [role="tab"] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}

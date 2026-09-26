@@ -156,20 +156,20 @@ export const MemberModal: React.FC<MemberModalProps> = ({
             </h2>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Quick Role Template Selector */}
-            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-600">
-              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-              <span>Apply Template:</span>
+            <div className="flex items-center gap-1.5 text-xs text-slate-600">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600 shrink-0 hidden sm:block" />
+              <span className="hidden sm:inline">Apply Template:</span>
               <select
                 onChange={(e) => {
                   if (e.target.value) handleApplyPreset(e.target.value);
                   e.target.value = '';
                 }}
-                className="px-2 py-1 text-xs bg-white border border-slate-300 rounded text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                className="px-2 py-1 text-xs bg-white border border-slate-300 rounded text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/40 max-w-[140px] sm:max-w-none"
                 defaultValue=""
               >
-                <option value="" disabled>Select hospitality role...</option>
+                <option value="" disabled>Role...</option>
                 {Object.keys(ROLE_PRESETS).map(name => (
                   <option key={name} value={name}>{name}</option>
                 ))}
