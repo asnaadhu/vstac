@@ -40,8 +40,18 @@ export function loadMembers(): TeamMemberRecord[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
+      // Migrate old single-object hardware to array format
+      const migrated = parsed.map((m: TeamMemberRecord) => {
+        if (m.hardware && !Array.isArray(m.hardware)) {
+          return { ...m, hardware: [m.hardware] };
+        }
+        if (!m.hardware) {
+          return { ...m, hardware: [] };
+        }
+        return m;
+      });
       // Strictly retain ONLY Avani+ Fares Maldives Resort team members
-      const vfarOnly = parsed.filter((m: TeamMemberRecord) => m.propertyOrLocation === 'Avani+ Fares Maldives Resort');
+      const vfarOnly = migrated.filter((m: TeamMemberRecord) => m.propertyOrLocation === 'Avani+ Fares Maldives Resort');
       if (vfarOnly.length === 0) {
         saveMembers(INITIAL_MEMBERS);
         return INITIAL_MEMBERS;
